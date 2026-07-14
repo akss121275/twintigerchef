@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Twin Tiger Chefs — A design studio for restaurants</title>
 <meta name="description" content="Twin Tiger Chefs — a design studio for restaurants. Two disciplines, one studio: the artist and the craftsman.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<!-- Open Graph / Twitter card -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Twin Tiger Chefs">
+<meta property="og:title" content="Twin Tiger Chefs — A design studio for restaurants">
+<meta property="og:description" content="Two disciplines, one studio — the artist and the craftsman. A design studio for restaurants.">
+<meta property="og:url" content="https://akss121275.github.io/twintigerchef/">
+<meta property="og:image" content="https://akss121275.github.io/twintigerchef/assets/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Twin Tiger Chefs — A design studio for restaurants">
+<meta name="twitter:description" content="Two disciplines, one studio — the artist and the craftsman. A design studio for restaurants.">
+<meta name="twitter:image" content="https://akss121275.github.io/twintigerchef/assets/social-card.jpg">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.className='';if(location.search.indexOf('reveal')>-1)document.documentElement.classList.add('reveal-all');</script>
@@ -13,10 +28,16 @@
 
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
-  <a href="#top" class="brand" data-brand>Twin Tiger Chefs</a>
+  <a href="#top" class="brand" aria-label="Twin Tiger Chefs"><img src="assets/logo.jpg" alt="Twin Tiger Chefs" class="brand-logo"></a>
   <nav class="navlinks">
     <a href="#studio">The Studio</a>
-    <a href="#tina">Chefs</a>
+    <div class="navdrop">
+      <a href="#tina" class="navdrop-top">Chefs</a>
+      <div class="navdrop-menu">
+        <a href="#tina">Chef Tina</a>
+        <a href="#solanky">Chef Solankky</a>
+      </div>
+    </div>
     <a href="#gallery">Kitchen</a>
     <a href="#work">Work</a>
     <a href="#contact">Contact</a>

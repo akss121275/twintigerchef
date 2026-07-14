@@ -274,3 +274,26 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
 .form-status.ok{opacity:1}
 .form-status.err{opacity:1;color:#e6b7a6;font-style:normal;font-family:var(--sans);
   font-size:15px;letter-spacing:.02em;line-height:1.6}
+
+/* ============================================================
+   Brand logo in nav + Chefs dropdown
+   ============================================================ */
+.brand{display:flex;align-items:center}
+.brand-logo{height:46px;width:auto;display:block;border-radius:4px}
+@media(max-width:860px){ .brand-logo{height:40px} }
+
+.navdrop{position:relative;display:flex;align-items:center}
+.navdrop::after{content:"";position:absolute;top:100%;left:-10px;right:-10px;height:18px}
+.navdrop-menu{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:14px;
+  display:none;flex-direction:column;
+  background:rgba(247,244,239,.98);backdrop-filter:blur(8px);
+  border:1px solid var(--line);box-shadow:0 12px 32px rgba(18,15,11,.14);
+  padding:6px 0;min-width:184px;
+}
+.navdrop:hover .navdrop-menu{display:flex}
+.navdrop-menu a{
+  color:var(--ink) !important;opacity:.9;padding:11px 22px;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;
+}
+.navdrop-menu a:hover{opacity:1;background:var(--sand)}
