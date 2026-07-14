@@ -279,8 +279,8 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
    Brand logo in nav + Chefs dropdown
    ============================================================ */
 .brand{display:flex;align-items:center}
-.brand-logo{height:90px;width:auto;display:block;border-radius:4px}
-@media(max-width:860px){ .brand-logo{height:64px} }
+.brand-logo{height:117px;width:auto;display:block;border-radius:4px}
+@media(max-width:860px){ .brand-logo{height:83px} }
 
 .navdrop{position:relative;display:flex;align-items:center}
 .navdrop::after{content:"";position:absolute;top:100%;left:-10px;right:-10px;height:18px}
@@ -297,4 +297,5 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   font-size:12px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;
 }
 .navdrop-menu a:hover{opacity:1;background:var(--sand)}
+
 
