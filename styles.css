@@ -188,6 +188,7 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
 .ph.photo{background-size:cover;background-repeat:no-repeat}
 .ph.photo::after{content:none}
 #tina .ph.photo,#solanky .ph.photo{background-size:contain;background-repeat:no-repeat;background-color:transparent;-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%)}
+#solanky .ph.photo{transform:scaleX(-1)}
 
 /* ============================================================
    Enrichment: hero carousel, texture breaks, gallery, cuisines
@@ -298,6 +299,7 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   font-size:12px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;
 }
 .navdrop-menu a:hover{opacity:1;background:var(--sand)}
+
 
 
 
