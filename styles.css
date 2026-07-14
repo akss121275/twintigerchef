@@ -187,7 +187,7 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
 /* real photos in place of placeholder blocks */
 .ph.photo{background-size:cover;background-repeat:no-repeat}
 .ph.photo::after{content:none}
-#tina .ph.photo,#solanky .ph.photo{background-size:contain;background-repeat:no-repeat;background-color:transparent;-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 90%,transparent 100%)}
+#tina .ph.photo,#solanky .ph.photo{background-size:contain;background-repeat:no-repeat;background-color:transparent;-webkit-mask-image:linear-gradient(to bottom,#000 80%,rgba(0,0,0,.72) 88%,rgba(0,0,0,.32) 94%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,rgba(0,0,0,.72) 88%,rgba(0,0,0,.32) 94%,transparent 100%)}
 #solanky .ph.photo{transform:scaleX(-1)}
 
 /* ============================================================
