@@ -96,8 +96,8 @@ header.nav.solid .navlinks a{color:var(--ink)}
 
 /* chef split */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.split.alt .txt{order:2}
-.split.alt .media{order:1}
+.split.alt .txt{order:1}
+.split.alt .media{order:2}
 .split .media .ph{aspect-ratio:4/5;width:100%}
 .split h2{font-size:clamp(32px,3.8vw,52px);margin-bottom:8px}
 .split .role{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:26px}
@@ -187,7 +187,7 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
 /* real photos in place of placeholder blocks */
 .ph.photo{background-size:cover;background-repeat:no-repeat}
 .ph.photo::after{content:none}
-#tina .ph.photo,#solanky .ph.photo{background-size:contain;background-repeat:no-repeat;background-color:transparent}
+#tina .ph.photo,#solanky .ph.photo{background-size:contain;background-repeat:no-repeat;background-color:transparent;-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%)}
 
 /* ============================================================
    Enrichment: hero carousel, texture breaks, gallery, cuisines
@@ -298,6 +298,7 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   font-size:12px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;
 }
 .navdrop-menu a:hover{opacity:1;background:var(--sand)}
+
 
 
 
