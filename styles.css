@@ -354,3 +354,21 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   color:var(--accent);text-decoration:none;transition:color .3s ease}
 .ig-link:hover{color:var(--ink)}
 .ig-link svg{flex:none;display:block}
+
+
+
+/* ============================================================
+   Update: cuisine caption lines (THE RANGE) — additive only
+   Wraps each cuisine name + a one-line description in a
+   bottom-anchored caption block. Name typography is unchanged;
+   only its positioning flows inside the new .cap block.
+   ============================================================ */
+.cuisine-show .cslide .cap{position:absolute;left:38px;bottom:28px;z-index:2;
+  display:flex;flex-direction:column;gap:9px;max-width:min(620px,72%)}
+.cuisine-show .cslide .cap .name{position:static;left:auto;bottom:auto}
+.cuisine-show .cslide .blurb{font-family:var(--sans);font-size:16px;line-height:1.42;
+  color:rgba(255,255,255,.92);letter-spacing:.01em;text-shadow:0 1px 12px rgba(0,0,0,.5)}
+@media(max-width:860px){
+  .cuisine-show .cslide .cap{left:22px;bottom:18px;gap:6px;max-width:86%}
+  .cuisine-show .cslide .blurb{font-size:13px;line-height:1.38}
+}
