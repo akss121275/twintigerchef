@@ -385,13 +385,23 @@
       <h2>Fluent across cuisines.</h2>
       <p>Fifteen years across Europe, Pan-Asia, Morocco, and the Middle East — an eye trained on many kitchens, brought to yours.</p>
     </div>
-    <div class="cuisine-show reveal" id="cuisineShow">
-      <div class="cslide on" style="background-image:url('assets/cuisine/asian.jpg')"><span class="name">Pan-Asian</span></div>
-      <div class="cslide" style="background-image:url('assets/cuisine/indian.jpg')"><span class="name">Indian</span></div>
-      <div class="cslide" style="background-image:url('assets/cuisine/korean.jpg')"><span class="name">Korean</span></div>
-      <div class="cslide" style="background-image:url('assets/cuisine/moroccan.jpg')"><span class="name">Moroccan &amp; Arabic</span></div>
-      <div class="cslide" style="background-image:url('assets/cuisine/italian.jpg')"><span class="name">Italian</span></div>
-      <div class="cslide" style="background-image:url('assets/cuisine/continental.jpg')"><span class="name">Continental</span></div>
+    <div class="polaroid reveal" id="cuisineShow">
+      <div class="pola-window">
+        <div class="cslide on" style="background-image:url('assets/cuisine/asian.jpg');background-position:72% center"></div>
+        <div class="cslide" style="background-image:url('assets/cuisine/indian.jpg')"></div>
+        <div class="cslide" style="background-image:url('assets/cuisine/korean.jpg')"></div>
+        <div class="cslide" style="background-image:url('assets/cuisine/moroccan.jpg')"></div>
+        <div class="cslide" style="background-image:url('assets/cuisine/italian.jpg')"></div>
+        <div class="cslide" style="background-image:url('assets/cuisine/continental.jpg')"></div>
+      </div>
+      <div class="pola-caption">
+        <span class="cname on">Pan-Asian</span>
+        <span class="cname">Indian</span>
+        <span class="cname">Korean</span>
+        <span class="cname">Moroccan &amp; Arabic</span>
+        <span class="cname">Italian</span>
+        <span class="cname">Continental</span>
+      </div>
     </div>
   </div>
 </section>
@@ -530,7 +540,22 @@ function initCarousel(slideSel, param, interval){
   },interval);
 }
 initCarousel('#heroSlides .slide','slide',6000);
-initCarousel('#cuisineShow .cslide','cslide',4500);
+// Range polaroid — one cuisine at a time (photo + name change together)
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('#cuisineShow .cslide'));
+  var names=Array.prototype.slice.call(document.querySelectorAll('#cuisineShow .cname'));
+  if(slides.length<2) return;
+  var m=location.search.match(/[?&]cuisine=(\d+)/);
+  if(m){ var f=Math.max(0,Math.min(slides.length-1,parseInt(m[1],10)));
+    slides.forEach(function(s,j){s.classList.toggle('on',j===f);});
+    names.forEach(function(s,j){s.classList.toggle('on',j===f);}); return; }
+  var i=0;
+  setInterval(function(){
+    slides[i].classList.remove('on'); names[i].classList.remove('on');
+    i=(i+1)%slides.length;
+    slides[i].classList.add('on'); names[i].classList.add('on');
+  },4200);
+})();
 initCarousel('#galleryShow .gslide','gslide',5000);
 initCarousel('#workGalleryShow .gslide','wgslide',5000);
 
@@ -619,7 +644,6 @@ if(!document.documentElement.classList.contains('reveal-all')){
 </script>
 </body>
 </html>
-
 
 
 
