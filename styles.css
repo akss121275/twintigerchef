@@ -125,11 +125,6 @@ header.nav.solid .navlinks a{color:var(--ink)}
 .project .meta{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .project h3{font-size:30px;margin-bottom:8px}
 .project p{font-size:15.5px}
-.milestone{margin-top:90px;border-top:1px solid var(--line);padding-top:60px;display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:center}
-.milestone .mstat{font-family:var(--serif);font-weight:400;font-size:clamp(72px,10vw,132px);line-height:.9;color:var(--ink)}
-.milestone .mtext{max-width:46ch}
-.milestone .mtext .eyebrow{margin-bottom:14px}
-.milestone .mtext p{font-size:19px}
 
 /* who / press */
 .audience{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:60px}
@@ -177,7 +172,6 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   .svc{grid-template-columns:1fr}
   .svc .cell{padding:34px 26px}
   .projects{grid-template-columns:1fr;gap:44px}
-  .milestone{grid-template-columns:1fr;gap:24px;text-align:left}
   .audience{grid-template-columns:1fr}
   .form{grid-template-columns:1fr}
   .hero{min-height:600px}
@@ -372,3 +366,86 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   .cuisine-show .cslide .cap{left:22px;bottom:18px;gap:6px;max-width:86%}
   .cuisine-show .cslide .blurb{font-size:13px;line-height:1.38}
 }
+
+
+
+/* ============================================================
+   Round 3 — combined refinements (additive; later source order
+   overrides earlier rules). Grouped by requested change.
+   ============================================================ */
+:root{ --brand:#d97524; }   /* tiger-logo amber */
+
+/* Brand amber + bold on chef names and section headlines */
+.lead h2{color:var(--brand);font-weight:600}
+.split h2{color:var(--brand);font-weight:600}
+
+/* Tighten oversized vertical whitespace */
+section{padding:100px 0}
+.svc{margin-top:44px}
+@media(max-width:860px){ section{padding:72px 0} }
+
+/* (a) Centered hero; even veil; let the two-line heading breathe */
+.hero .wrap{text-align:center}
+.hero h1{margin-left:auto;margin-right:auto;max-width:none;margin-bottom:22px}
+.hero p.lede{margin-left:auto;margin-right:auto;max-width:50ch;margin-bottom:30px}
+.hero .veil{background:
+  linear-gradient(180deg,rgba(18,15,11,.5) 0%,rgba(18,15,11,.32) 42%,rgba(18,15,11,.6) 100%)}
+
+/* (b) let the merged-section heading keep its two lines */
+#how .lead h2{max-width:none}
+#who .lead h2{max-width:none}
+
+
+/* (c) THE RANGE — uniform, even, aligned framed grid */
+.range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+.range-grid .rbox{border:1px solid var(--line);background:var(--bone);padding:10px;
+  box-shadow:0 14px 34px -26px rgba(33,29,22,.5)}
+.range-grid .rimg{aspect-ratio:4/3;background-size:cover;background-position:center;
+  filter:brightness(1.08) contrast(1.02) saturate(1.03)}
+.range-grid figcaption{display:flex;flex-direction:column;gap:5px;padding:14px 8px 8px}
+.range-grid .name{font-family:var(--serif);font-size:22px;color:var(--ink);font-weight:600;line-height:1.12}
+.range-grid .blurb{font-family:var(--sans);font-size:14px;line-height:1.42;color:var(--muted)}
+@media(max-width:860px){ .range-grid{grid-template-columns:repeat(2,1fr);gap:12px} }
+@media(max-width:520px){ .range-grid{grid-template-columns:1fr} }
+
+/* (d)+(l) FROM THE KITCHEN — compact framed grid (fixes oversized images) */
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:50px}
+.kbox{overflow:hidden;border:1px solid var(--line);background:var(--sand)}
+.kimg{aspect-ratio:4/3;background-size:cover;background-position:center;
+  filter:brightness(1.08) contrast(1.02) saturate(1.03);transition:transform 1.2s ease}
+.kbox:hover .kimg{transform:scale(1.05)}
+@media(max-width:860px){ .kgrid{grid-template-columns:repeat(2,1fr);gap:10px} }
+
+/* (i) WHO WE WORK WITH — clean cards with subtle amber accent */
+.audience{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.audience .a{background:var(--sand);border:1px solid var(--line);border-top:3px solid var(--brand);
+  padding:30px 28px 32px;display:block}
+.audience .a .a-mark{font-family:var(--serif);font-size:20px;color:var(--brand);display:block;margin-bottom:14px}
+.audience .a h3{font-family:var(--serif);font-size:23px;color:var(--ink);line-height:1.14;margin-bottom:10px}
+.audience .a p{font-size:14.5px;line-height:1.5}
+
+/* (l) Chef Tina working photo, stacked under the portrait */
+/* (k) CONTACT — warmer, lighter dark + centered */
+.contact{background:#3a3228}
+.contact .wrap{text-align:center}
+.contact h2{margin-left:auto;margin-right:auto}
+.contact .manifesto{margin-left:auto;margin-right:auto;max-width:46ch}
+.contact .form{margin-left:auto;margin-right:auto}
+.contact .form input,.contact .form textarea{text-align:left}
+.contact .form .submit{justify-self:center}
+.contact .form-status{margin-left:auto;margin-right:auto;text-align:center}
+
+/* (8) shrink large desktop images */
+@media(min-width:861px){
+  .split .media{max-width:380px;width:100%;margin-left:auto;margin-right:auto}
+  .project .ph{max-width:480px;margin-left:auto;margin-right:auto}
+  .texture{height:300px}
+}
+
+/* (r5) 500+ stat folded into the centered studio intro */
+#studio .studio-stat{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:6px}
+#studio .studio-stat .n{font-family:var(--serif);font-weight:400;font-size:clamp(56px,7vw,92px);line-height:1;color:var(--brand)}
+#studio .studio-stat p{font-size:19px;max-width:54ch;margin:0}
+
+/* (r5b) services closing tagline */
+#how .lead-close{font-family:var(--serif);font-size:22px;color:var(--ink);margin-top:18px}
