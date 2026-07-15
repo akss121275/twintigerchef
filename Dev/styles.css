@@ -165,6 +165,8 @@ header.nav.solid .navlinks a{color:var(--ink)}
 .form select option{color:var(--dark-text);background:var(--dark)}
 .form select option[disabled]{color:rgba(233,225,211,.55)}
 .form .submit{grid-column:1/-1;justify-self:start;margin-top:10px}
+.form .submit,.cta.light.submit{background:#e0842e;color:var(--ink);border-color:#e0842e}
+.form .submit:hover,.cta.light.submit:hover{background:var(--ink);color:#e0842e;border-color:#e0842e}
 
 /* footer */
 footer.foot{background:var(--dark);color:rgba(233,225,211,.6);border-top:1px solid rgba(233,225,211,.12);padding:50px 0}
