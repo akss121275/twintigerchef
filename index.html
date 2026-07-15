@@ -228,6 +228,44 @@
   </div>
 </section>
 
+
+<!-- ===== SELECTED WORK / GALLERY (sliding carousel) ===== -->
+<section id="workgallery" style="background:var(--sand)">
+  <div class="wrap">
+    <div class="lead reveal"><span class="eyebrow">Gallery</span>
+      <h2>Selected work</h2>
+      <p>A rolling look across plated dishes, press features, and moments from the pass.</p>
+    </div>
+    <div class="wgal reveal" id="wgal">
+      <div class="wgal-viewport">
+        <div class="wgal-track" id="wgalTrack">
+          <div class="wgal-slide"><img src="assets/work/work-01.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-02.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-03.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-04.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-05.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-06.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-07.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-08.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-09.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-10.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-11.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-13.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-14.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-15.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-16.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-17.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-19.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+          <div class="wgal-slide"><img src="assets/work/work-20.jpg" alt="Twin Tiger Chefs selected work" loading="lazy"></div>
+        </div>
+      </div>
+      <button class="wgal-arrow prev" id="wgalPrev" type="button" aria-label="Previous slide">&#8249;</button>
+      <button class="wgal-arrow next" id="wgalNext" type="button" aria-label="Next slide">&#8250;</button>
+      <div class="wgal-dots" id="wgalDots" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== WHO WE WORK WITH ===== -->
 <section id="who" style="background:var(--sand)">
   <div class="wrap">
@@ -312,6 +350,43 @@ initCarousel('#heroSlides .slide','slide',6000);
 initCarousel('#cuisineShow .cslide','cslide',4500);
 initCarousel('#galleryShow .gslide','gslide',5000);
 
+// Selected-work sliding carousel — auto-advance, arrows, dots, swipe
+(function(){
+  var track=document.getElementById('wgalTrack');
+  if(!track) return;
+  var slides=Array.prototype.slice.call(track.children);
+  var n=slides.length; if(n<1) return;
+  var dotsWrap=document.getElementById('wgalDots');
+  var i=0, timer=null, INT=4500;
+  var dots=slides.map(function(s,j){
+    var b=document.createElement('button');
+    b.type='button'; b.setAttribute('aria-label','Go to slide '+(j+1));
+    b.addEventListener('click',function(){go(j);reset();});
+    dotsWrap.appendChild(b); return b;
+  });
+  function render(){
+    track.style.transform='translateX('+(-i*100)+'%)';
+    dots.forEach(function(d,j){d.classList.toggle('on',j===i);});
+  }
+  function go(j){i=(j+n)%n;render();}
+  function next(){go(i+1);} function prev(){go(i-1);}
+  function start(){ if(n>1) timer=setInterval(next,INT); }
+  function reset(){clearInterval(timer);start();}
+  var nx=document.getElementById('wgalNext'), pv=document.getElementById('wgalPrev');
+  if(nx) nx.addEventListener('click',function(){next();reset();});
+  if(pv) pv.addEventListener('click',function(){prev();reset();});
+  var x0=null;
+  track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',function(e){
+    if(x0===null)return; var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40){ if(dx<0) next(); else prev(); reset(); } x0=null;
+  },{passive:true});
+  var wg=document.getElementById('wgal');
+  if(wg){ wg.addEventListener('mouseenter',function(){clearInterval(timer);});
+          wg.addEventListener('mouseleave',function(){reset();}); }
+  render(); start();
+})();
+
 // Reveal on scroll (skipped when ?reveal is present, e.g. for full-page capture)
 if(!document.documentElement.classList.contains('reveal-all')){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
@@ -360,5 +435,6 @@ if(!document.documentElement.classList.contains('reveal-all')){
 </script>
 </body>
 </html>
+
 
 
