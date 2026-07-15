@@ -98,6 +98,9 @@ header.nav.solid .navlinks a{color:var(--ink)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .split.alt .txt{order:1}
 .split.alt .media{order:2}
+/* founder blocks: image right on desktop, image on top on mobile - consistent for both */
+#tina .txt,#solanky .txt{order:1}
+#tina .media,#solanky .media{order:2}
 .split .media .ph{aspect-ratio:4/5;width:100%}
 .split h2{font-size:clamp(32px,3.8vw,52px);margin-bottom:8px}
 .split .role{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:26px}
@@ -184,6 +187,8 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   .navlinks{display:none}
   .split{grid-template-columns:1fr;gap:40px}
   .split.alt .txt{order:1}.split.alt .media{order:2}
+  #tina .media,#solanky .media{order:1}
+  #tina .txt,#solanky .txt{order:2}
   .split ul{columns:1}
   .steps{grid-template-columns:1fr;gap:34px}
   .svc{grid-template-columns:1fr}
