@@ -347,3 +347,10 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
   color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
   transition:color .3s ease,border-color .3s ease}
 .wgal-more a:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ===== Chef Instagram link ===== */
+.ig-link{display:inline-flex;align-items:center;gap:9px;margin-top:26px;
+  font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);text-decoration:none;transition:color .3s ease}
+.ig-link:hover{color:var(--ink)}
+.ig-link svg{flex:none;display:block}
