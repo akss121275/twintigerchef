@@ -151,6 +151,18 @@ header.nav.solid .navlinks a{color:var(--ink)}
 .form input:focus,.form textarea:focus{outline:none;border-bottom-color:var(--dark-text)}
 .form .full{grid-column:1/-1}
 .form textarea{resize:vertical;min-height:90px}
+.form select{
+  background:transparent;border:none;border-bottom:1px solid rgba(233,225,211,.32);
+  color:var(--dark-text);font-family:var(--sans);font-weight:300;font-size:15px;
+  padding:14px 2px;width:100%;cursor:pointer;letter-spacing:.02em;
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e9e1d3' stroke-width='1.6'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 2px center;background-size:13px;padding-right:22px;
+}
+.form select:focus{outline:none;border-bottom-color:var(--dark-text)}
+.form select:invalid{color:rgba(233,225,211,.5)}
+.form select option{color:#2a2620;background:#f4efe6}
+.form select option[disabled]{color:rgba(42,38,32,.5)}
 .form .submit{grid-column:1/-1;justify-self:start;margin-top:10px}
 
 /* footer */
