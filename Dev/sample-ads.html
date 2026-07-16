@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample ads - Twin Tiger Chefs (Dev sample)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ---- Dev prototype: three mock ads, one per stage ---- */
+  body{background:var(--bone)}
+  .ad-top{display:flex;justify-content:center;padding:26px 0 6px}
+  .ad-top img{height:74px;width:auto;display:block}
+  main.ads{padding:34px 0 90px}
+  .ads-wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .ads-intro{margin-bottom:38px}
+  .ads-intro .eyebrow{margin-bottom:16px}
+  .ads-intro h1{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(28px,7vw,44px);line-height:1.09;max-width:16ch;margin:0}
+
+  .ad{border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bone);
+    margin-bottom:26px;box-shadow:0 14px 34px -28px rgba(33,29,22,.55)}
+  .ad .ph{aspect-ratio:16/9;width:100%}
+  .ad-body{padding:28px 26px 30px}
+  .ad-body .eyebrow{margin-bottom:14px}
+  .ad-body h2{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(23px,5.6vw,30px);line-height:1.16;max-width:18ch;margin:0 0 12px}
+  .ad-body p{font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.6;
+    color:var(--muted);max-width:38ch;margin:0 0 22px}
+  .ad-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:400;
+    font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+    border:1px solid var(--ink);padding:14px 28px;border-radius:3px;cursor:pointer;
+    transition:background .35s ease,color .35s ease}
+  .ad-cta:hover{background:var(--ink);color:var(--bone)}
+  .ad-cta .glyph{color:var(--accent);letter-spacing:0}
+  .ad-cta:hover .glyph{color:var(--bone)}
+</style>
+</head>
+<body>
+
+<div class="ad-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
+
+<main class="ads">
+  <div class="ads-wrap">
+    <div class="ads-intro">
+      <span class="eyebrow">Sample ads</span>
+      <h1>Three ads. Each one meets a restaurant where it is.</h1>
+    </div>
+
+    <!-- Opening soon -->
+    <article class="ad">
+      <div class="ph soft" data-label="Opening soon" role="img" aria-label="Opening soon"></div>
+      <div class="ad-body">
+        <span class="eyebrow">Opening soon</span>
+        <h2>A great idea isn't an operation yet.</h2>
+        <p>Turn your concept into a kitchen that runs like clockwork from day one.</p>
+        <a class="ad-cta" href="sample-problems.html?stage=opening">See how we work <span class="glyph" aria-hidden="true">&gt;</span></a>
+      </div>
+    </article>
+
+    <!-- Open but struggling -->
+    <article class="ad">
+      <div class="ph" data-label="Open but struggling" role="img" aria-label="Open but struggling"></div>
+      <div class="ad-body">
+        <span class="eyebrow">Open but struggling</span>
+        <h2>Great food gets them once.</h2>
+        <p>Build the consistency and the margins that bring them back.</p>
+        <a class="ad-cta" href="sample-problems.html?stage=struggling">See how we work <span class="glyph" aria-hidden="true">&gt;</span></a>
+      </div>
+    </article>
+
+    <!-- Ready to grow -->
+    <article class="ad">
+      <div class="ph dark" data-label="Ready to grow" role="img" aria-label="Ready to grow"></div>
+      <div class="ad-body">
+        <span class="eyebrow">Ready to grow</span>
+        <h2>It works when you're there. That's the problem.</h2>
+        <p>Build the systems so it runs just as well when you're not in the room.</p>
+        <a class="ad-cta" href="sample-problems.html?stage=grow">See how we work <span class="glyph" aria-hidden="true">&gt;</span></a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+</body>
+</html>
