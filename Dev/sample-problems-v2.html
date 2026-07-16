@@ -25,7 +25,7 @@
   .ps-picker{margin:0}
   .ps-sentence{font-family:var(--serif);font-weight:400;color:var(--ink);
     font-size:clamp(26px,7vw,36px);line-height:1.55;margin:0;max-width:20ch;
-    display:inline}
+    display:block}
   .ps-blank-wrap{position:relative;display:inline-block;vertical-align:baseline}
   .ps-blank{background:none;border:0;margin:0;padding:0 6px 3px;cursor:pointer;
     font-family:var(--serif);font-weight:400;font-size:inherit;line-height:1.2;
@@ -121,13 +121,13 @@
     <h2 class="ps-head">Where are you right now?</h2>
 
     <div class="ps-picker" role="group" aria-label="Choose your stage">
-      <p class="ps-sentence">I'm<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="psBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in where you are"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="psMenu" role="listbox" aria-label="Choose your stage" hidden>
+      <div class="ps-sentence">I'm<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="psBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in where you are"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="psMenu" role="listbox" aria-label="Choose your stage" hidden>
         <li role="option" data-stage="thinking" aria-selected="false">just thinking about it</li>
         <li role="option" data-stage="opening" aria-selected="false">opening soon</li>
         <li role="option" data-stage="struggling" aria-selected="false">open but facing issues</li>
         <li role="option" data-stage="large-launch" aria-selected="false">planning a large F&amp;B launch</li>
         <li role="option" data-stage="chain" aria-selected="false">running a large chain</li>
-      </ul></span></p>
+      </ul></span></div>
     </div>
 
     <p class="ps-hint">Tap the blank and tell us where you are. We will show what tends to get in the way, and what we do about it.</p>
