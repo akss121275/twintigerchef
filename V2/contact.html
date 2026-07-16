@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact - Twin Tiger Chefs</title>
+<meta name="description" content="Contact Twin Tiger Chefs for a free consultation.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="nav" aria-label="Primary">
+  <a href="index.html" class="brand">Twin Tiger Chefs</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <div class="nav-drop">
+      <a href="resources.html" class="nav-drop-top">Resources <span class="caret" aria-hidden="true">&#9662;</span></a>
+      <div class="nav-drop-menu">
+        <a href="media.html">Media</a>
+        <a href="checklists.html">Checklists</a>
+        <a href="sops.html">SOPs</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="articles.html">Articles</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+<header class="page-head">
+  <div class="wrap">
+    <h1>Contact</h1>
+    <p class="lede">Call for a free consultation, or send a message and we will call you back.</p>
+  </div>
+</header>
+<section class="contact">
+  <div class="wrap">
+    <span class="eyebrow">Let us talk</span>
+    <h2>Tell us about your restaurant.</h2>
+    <p class="manifesto">Not only chefs. Not only consultants. A studio built on art and craft.</p>
+    <div class="consult">
+      <h3>Call for a free consultation</h3>
+      <p class="hours">9am - 11am and 3pm - 7pm</p>
+      <div class="lines">
+        <a href="tel:+917680941272">Call +917680941272</a>
+        <a href="https://wa.me/917680941272">WhatsApp us</a>
+        <a href="mailto:drunkenswamihead@gmail.com">drunkenswamihead@gmail.com</a>
+      </div>
+    </div>
+    <p style="font-family:var(--serif);font-style:italic;color:rgba(233,225,211,.8);margin-bottom:22px">Or send us a message and we will call you back.</p>
+    <form class="form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="YOUR-WEB3FORMS-KEY">
+      <input type="hidden" name="subject" value="New enquiry from Twin Tiger Chefs website">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" class="full" name="phone" placeholder="Phone" required>
+      <input type="text" class="full" name="project" placeholder="Your restaurant or project">
+      <select class="full" name="client_type">
+        <option value="" disabled selected>What best describes you?</option>
+        <option value="New restaurant">New restaurant</option>
+        <option value="Existing restaurant">Existing restaurant</option>
+        <option value="New F&amp;B venture">New F&amp;B venture</option>
+        <option value="Established group / chain">Established group / chain</option>
+      </select>
+      <textarea class="full" name="message" placeholder="Tell us a little about it" required></textarea>
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <button class="cta submit" type="submit">Send</button>
+    </form>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap">
+    <span class="brand">Twin Tiger Chefs</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <span class="meta">A design studio for restaurants - Hyderabad, India</span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
