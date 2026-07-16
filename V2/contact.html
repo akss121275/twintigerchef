@@ -8,6 +8,18 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .consult .cta-call-head{color:inherit;text-decoration:none;transition:color .2s ease}
+  .consult .cta-call-head:hover{color:var(--brand)}
+  .cta-actions{display:flex;flex-wrap:wrap;gap:12px;margin:4px 0 0}
+  .cta-btn{display:inline-block;font-family:var(--sans);font-weight:400;font-size:13px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dark-text);
+    border:1px solid rgba(233,225,211,.5);padding:13px 28px;text-decoration:none;border-radius:2px;
+    transition:background-color .2s ease,color .2s ease,border-color .2s ease}
+  .cta-btn:hover{background:var(--dark-text);color:var(--dark);border-color:var(--dark-text)}
+  .cta-btn.amber{background:var(--brand);border-color:var(--brand);color:#fff}
+  .cta-btn.amber:hover{background:#fff;border-color:#fff;color:var(--brand)}
+</style>
 </head>
 <body>
 <nav class="nav" aria-label="Primary">
@@ -41,12 +53,12 @@
     <h2>Tell us about your restaurant.</h2>
     <p class="manifesto">Not only chefs. Not only consultants. A studio built on art and craft.</p>
     <div class="consult">
-      <h3>Call for a free consultation</h3>
+      <h3><a class="cta-call-head" href="tel:+917680941272">Call for a free consultation</a></h3>
       <p class="hours">9am - 11am and 3pm - 7pm</p>
-      <div class="lines">
-        <a href="tel:+917680941272">Call +917680941272</a>
-        <a href="https://wa.me/917680941272">WhatsApp us</a>
-        <a href="mailto:drunkenswamihead@gmail.com">drunkenswamihead@gmail.com</a>
+      <div class="cta-actions">
+        <a class="cta-btn amber" href="tel:+917680941272">Call</a>
+        <a class="cta-btn" href="https://wa.me/917680941272">WhatsApp</a>
+        <a class="cta-btn" href="mailto:drunkenswamihead@gmail.com">Email</a>
       </div>
     </div>
     <p style="font-family:var(--serif);font-style:italic;color:rgba(233,225,211,.8);margin-bottom:22px">Or send us a message and we will call you back.</p>
