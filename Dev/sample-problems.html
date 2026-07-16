@@ -19,29 +19,34 @@
   .ps h2.ps-head{font-family:var(--serif);font-weight:400;color:var(--ink);
     font-size:clamp(31px,8vw,48px);line-height:1.08;max-width:14ch;margin:0 0 30px}
 
-  /* stage selector - stacked, full width, one thumb */
-  .ps-stages{display:flex;flex-direction:column;gap:12px}
-  .ps-stage{width:100%;text-align:left;background:var(--bone);border:1px solid var(--line);
-    border-radius:3px;padding:18px 22px;font-family:var(--sans);font-weight:400;font-size:13px;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--ink);cursor:pointer;
-    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  /* "I'm ___" picker - five always-visible lines that read like finishing a sentence.
+     No box, no border, no chevron, no dropdown - just tappable text. */
+  .ps-picker{margin:0}
+  .ps-lead{font-family:var(--serif);font-style:italic;color:var(--muted);
+    font-size:clamp(21px,5.4vw,26px);line-height:1.2;margin:0 0 12px}
+  .ps-options{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+  .ps-opt{background:none;border:0;padding:5px 0;margin:0;text-align:left;cursor:pointer;
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(25px,6.8vw,34px);line-height:1.22;color:var(--ink);opacity:.42;
     -webkit-appearance:none;appearance:none;
-    transition:border-color .35s ease,background .35s ease,color .35s ease}
-  .ps-stage:hover{border-color:var(--muted)}
-  .ps-stage:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
-  .ps-stage[aria-pressed="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
-  .ps-stage .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);
-    flex:none;opacity:0;transform:scale(.5);transition:opacity .35s ease,transform .35s ease}
-  .ps-stage[aria-pressed="true"] .dot{opacity:1;transform:scale(1)}
+    transition:color .4s ease,opacity .4s ease}
+  .ps-opt:hover{opacity:.75}
+  .ps-opt:focus-visible{outline:2px solid #d97524;outline-offset:5px;border-radius:2px}
+  .ps-opt[aria-pressed="true"]{color:#d97524;opacity:1}
+  .ps-picker.has-active .ps-opt:not([aria-pressed="true"]){opacity:.3}
 
   .ps-hint{font-family:var(--sans);font-size:14px;color:var(--muted);
-    margin:22px 2px 0;line-height:1.6}
+    margin:26px 2px 0;line-height:1.6}
 
   /* stage card groups - only one active at a time */
   .ps-groups{margin-top:34px}
   .ps-group{display:none}
   .ps-group.active{display:block;animation:psfade .5s ease}
   @keyframes psfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* quiet placeholder for stages with no cards yet */
+  .ps-soon{font-family:var(--serif);font-style:italic;color:var(--muted);
+    font-size:clamp(18px,5vw,21px);line-height:1.5;margin:6px 2px 0;max-width:26ch}
 
   /* flip cards - tall rectangle; front shows the pain, tap to rotate to the back */
   .pcard{perspective:1500px;margin-bottom:16px}
@@ -77,6 +82,7 @@
   .pcard-back .seelink:hover{color:var(--ink);border-color:var(--ink)}
 </style>
 <noscript><style>.ps-group{display:block!important}.ps-hint{display:none}
+  .ps-opt{opacity:1}
   .pcard-inner{display:block;min-height:0}
   .pcard-face{backface-visibility:visible;-webkit-backface-visibility:visible}
   .pcard-back{transform:none;border-top:0}
@@ -91,21 +97,25 @@
     <span class="eyebrow">Where you are</span>
     <h2 class="ps-head">Where are you right now?</h2>
 
-    <div class="ps-stages" role="group" aria-label="Choose your stage">
-      <button type="button" class="ps-stage" data-stage="opening" aria-pressed="false">
-        <span>Opening soon</span><span class="dot" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="ps-stage" data-stage="struggling" aria-pressed="false">
-        <span>Open but struggling</span><span class="dot" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="ps-stage" data-stage="grow" aria-pressed="false">
-        <span>Ready to grow</span><span class="dot" aria-hidden="true"></span>
-      </button>
+    <div class="ps-picker" role="group" aria-label="Choose your stage">
+      <p class="ps-lead">I'm...</p>
+      <div class="ps-options">
+        <button type="button" class="ps-opt" data-stage="thinking" aria-pressed="false">just thinking about it</button>
+        <button type="button" class="ps-opt" data-stage="opening" aria-pressed="false">opening soon</button>
+        <button type="button" class="ps-opt" data-stage="struggling" aria-pressed="false">open but facing issues</button>
+        <button type="button" class="ps-opt" data-stage="large-launch" aria-pressed="false">planning a large F&amp;B launch</button>
+        <button type="button" class="ps-opt" data-stage="chain" aria-pressed="false">running a large chain</button>
+      </div>
     </div>
 
     <p class="ps-hint">Pick where you are. We will show what tends to get in the way, and what we do about it.</p>
 
     <div class="ps-groups">
+
+      <!-- Just thinking about it -->
+      <div class="ps-group" data-stage="thinking">
+        <p class="ps-soon">More on this stage soon.</p>
+      </div>
 
       <!-- Opening soon -->
       <div class="ps-group" data-stage="opening">
@@ -137,7 +147,7 @@
         </div>
       </div>
 
-      <!-- Open but struggling -->
+      <!-- Open but facing issues -->
       <div class="ps-group" data-stage="struggling">
         <div class="pcard">
           <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="My food is great but people don't come back. Tap to see how we work.">
@@ -180,8 +190,8 @@
         </div>
       </div>
 
-      <!-- Ready to grow -->
-      <div class="ps-group" data-stage="grow">
+      <!-- Planning a large F&B launch (reuses the former "grow" cards) -->
+      <div class="ps-group" data-stage="large-launch">
         <div class="pcard">
           <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="It works when I'm there. It falls apart when I'm not. Tap to see how we work.">
             <div class="pcard-face pcard-front">
@@ -210,6 +220,11 @@
         </div>
       </div>
 
+      <!-- Running a large chain -->
+      <div class="ps-group" data-stage="chain">
+        <p class="ps-soon">More on this stage soon.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -217,7 +232,8 @@
 <script>
 document.documentElement.className='';
 (function(){
-  var stages=[].slice.call(document.querySelectorAll('.ps-stage'));
+  var picker=document.querySelector('.ps-picker');
+  var stages=[].slice.call(document.querySelectorAll('.ps-opt'));
   var groups=[].slice.call(document.querySelectorAll('.ps-group'));
   var hint=document.querySelector('.ps-hint');
   function resetFlips(){
@@ -226,21 +242,16 @@ document.documentElement.className='';
       var inner=c.querySelector('.pcard-inner'); if(inner){inner.setAttribute('aria-pressed','false');}
     });
   }
+  function activate(key){
+    stages.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-stage')===key?'true':'false');});
+    groups.forEach(function(g){g.classList.toggle('active',g.getAttribute('data-stage')===key);});
+    resetFlips();
+    if(picker){picker.classList.add('has-active');}
+    if(hint){hint.style.display='none';}
+  }
   stages.forEach(function(btn){
     btn.addEventListener('click',function(){
-      var key=btn.getAttribute('data-stage');
-      var wasActive=btn.getAttribute('aria-pressed')==='true';
-      stages.forEach(function(b){b.setAttribute('aria-pressed','false');});
-      groups.forEach(function(g){g.classList.remove('active');});
-      resetFlips();
-      if(!wasActive){
-        btn.setAttribute('aria-pressed','true');
-        var g=document.querySelector('.ps-group[data-stage="'+key+'"]');
-        if(g){g.classList.add('active');}
-        if(hint){hint.style.display='none';}
-      }else if(hint){
-        hint.style.display='';
-      }
+      activate(btn.getAttribute('data-stage'));
     });
   });
   function toggleFlip(inner){
@@ -257,19 +268,15 @@ document.documentElement.className='';
       if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFlip(inner);}
     });
   });
-  // Deep-link: ?stage=opening|struggling|grow auto-activates that stage on load.
+  // Deep-link: ?stage=<slug> auto-activates that stage on load.
+  // Legacy ?stage=grow maps to the new large-launch stage so old ads still land.
   var params=new URLSearchParams(window.location.search);
   var pre=params.get('stage');
+  if(pre==='grow'){pre='large-launch';}
   if(pre){
     var target=stages.filter(function(b){return b.getAttribute('data-stage')===pre;})[0];
     if(target){
-      stages.forEach(function(b){b.setAttribute('aria-pressed','false');});
-      groups.forEach(function(g){g.classList.remove('active');});
-      resetFlips();
-      target.setAttribute('aria-pressed','true');
-      var pg=document.querySelector('.ps-group[data-stage="'+pre+'"]');
-      if(pg){pg.classList.add('active');}
-      if(hint){hint.style.display='none';}
+      activate(pre);
       var sec=document.getElementById('problems');
       if(sec){setTimeout(function(){sec.scrollIntoView({behavior:'smooth',block:'start'});},80);}
     }
