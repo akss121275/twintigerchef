@@ -8,6 +8,20 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .phero{position:relative;min-height:min(76vh,660px);display:flex;align-items:center;
+    color:#fff;overflow:hidden;background:var(--dark)}
+  .phero-slides{position:absolute;inset:0;z-index:0}
+  .phero-slide{position:absolute;inset:0;background-size:cover;background-position:center;
+    opacity:0;transition:opacity 2.4s ease-in-out;will-change:opacity;
+    filter:brightness(1.16) contrast(1.03) saturate(1.04)}
+  .phero-slide.on{opacity:1}
+  .phero-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(18,15,11,.85) 0%,rgba(18,15,11,.6) 45%,rgba(18,15,11,.42) 100%),linear-gradient(180deg,rgba(18,15,11,.28) 0%,rgba(18,15,11,.12) 24%,rgba(18,15,11,.4) 100%)}
+  .phero .wrap{position:relative;z-index:2;padding-top:clamp(56px,10vh,120px);padding-bottom:clamp(56px,10vh,120px)}
+  .phero .eyebrow{color:#d7cdb9}
+  .phero h1{color:#fff;font-size:clamp(40px,6vw,84px);font-weight:400;max-width:14ch;margin-bottom:24px}
+  .phero .lede{color:rgba(255,255,255,.86);font-size:clamp(17px,1.6vw,19px);font-weight:300;max-width:44ch;margin:0}
+</style>
 </head>
 <body>
 <nav class="nav" aria-label="Primary">
@@ -29,10 +43,18 @@
     <a href="contact.html">Contact</a>
   </div>
 </nav>
-<header class="page-head">
+<header class="phero" id="top">
+  <div class="phero-slides">
+    <div class="phero-slide on" style="background-image:url('../assets/hero/h1.jpg')"></div>
+    <div class="phero-slide" style="background-image:url('../assets/hero/h2.jpg')"></div>
+    <div class="phero-slide" style="background-image:url('../assets/hero/h3.jpg')"></div>
+    <div class="phero-slide" style="background-image:url('../assets/hero/h4.jpg')"></div>
+  </div>
+  <div class="phero-veil"></div>
   <div class="wrap">
-    <h1>Art and craft, under one studio.</h1>
-    <p class="lede">Twin Tiger Chefs is a design studio for restaurants. Two disciplines, one studio: the artist and the craftsman.</p>
+    <span class="eyebrow">A design studio for restaurants</span>
+    <h1>Beautiful to experience. Built to last.</h1>
+    <p class="lede">Two disciplines, one studio - the artist and the craftsman.</p>
   </div>
 </header>
 
@@ -128,5 +150,8 @@
   </div>
 </footer>
 <script src="site.js"></script>
+<script>
+(function(){var s=[].slice.call(document.querySelectorAll('.phero-slide'));if(s.length<2)return;var i=0;setInterval(function(){s[i].classList.remove('on');i=(i+1)%s.length;s[i].classList.add('on');},4200);})();
+</script>
 </body>
 </html>
