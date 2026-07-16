@@ -118,7 +118,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">A great idea isn't an operation.</p>
               <p class="dowhat">We turn your concept into documented standards - recipes, prep, roles - before day one.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-concept-no-system.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">Smooth service is built before the doors open.</p>
               <p class="dowhat">We set up mise en place, SOPs and staff training so opening runs like your hundredth day.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-opening-chaos.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">Great food gets them once. Consistency brings them back.</p>
               <p class="dowhat">We build the systems that make every plate the same.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-food-no-repeat.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">Revenue creates excitement. Margins build businesses.</p>
               <p class="dowhat">We put someone on the numbers - food cost, yield, waste, labour - so profit stops leaking.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-profit-leak.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -174,7 +174,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">As many standards as employees is no standard at all.</p>
               <p class="dowhat">We document the way it should be done, so quality doesn't depend on who showed up.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-team-inconsistent.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">A business that needs you can't grow.</p>
               <p class="dowhat">We build the systems and leadership so it runs without you in the room.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-runs-on-you.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@
             <div class="pcard-face pcard-back">
               <p class="reframe">You can't scale what isn't written down.</p>
               <p class="dowhat">We turn your operation into a repeatable blueprint you can open again.</p>
-              <a href="#work" class="seelink">See how we work &gt;</a>
+              <a href="problem-second-location.html" class="seelink">See how we work &gt;</a>
             </div>
           </div>
         </div>
@@ -257,6 +257,23 @@ document.documentElement.className='';
       if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFlip(inner);}
     });
   });
+  // Deep-link: ?stage=opening|struggling|grow auto-activates that stage on load.
+  var params=new URLSearchParams(window.location.search);
+  var pre=params.get('stage');
+  if(pre){
+    var target=stages.filter(function(b){return b.getAttribute('data-stage')===pre;})[0];
+    if(target){
+      stages.forEach(function(b){b.setAttribute('aria-pressed','false');});
+      groups.forEach(function(g){g.classList.remove('active');});
+      resetFlips();
+      target.setAttribute('aria-pressed','true');
+      var pg=document.querySelector('.ps-group[data-stage="'+pre+'"]');
+      if(pg){pg.classList.add('active');}
+      if(hint){hint.style.display='none';}
+      var sec=document.getElementById('problems');
+      if(sec){setTimeout(function(){sec.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+    }
+  }
 })();
 </script>
 </body>
