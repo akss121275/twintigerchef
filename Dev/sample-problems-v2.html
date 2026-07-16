@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where are you right now? - Twin Tiger Chefs (Dev sample v2)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ---- Dev prototype v2: fill-in-the-blank sentence entry with dropdown ---- */
+  body{background:var(--bone)}
+  .ps-top{display:flex;justify-content:center;padding:26px 0 4px}
+  .ps-top img{height:78px;width:auto;display:block}
+  section.ps{padding:56px 0 110px}
+  .ps-wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .ps .eyebrow{margin-bottom:18px}
+  .ps h2.ps-head{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(31px,8vw,48px);line-height:1.08;max-width:14ch;margin:0 0 30px}
+
+  /* "I'm ___" fill-in-the-blank sentence. The blank is an underlined slot that
+     reads like a line to be completed, with a small down-caret. Tapping it opens
+     a custom styled dropdown anchored at the blank - NOT a native <select>. */
+  .ps-picker{margin:0}
+  .ps-sentence{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(26px,7vw,36px);line-height:1.55;margin:0;max-width:20ch;
+    display:inline}
+  .ps-blank-wrap{position:relative;display:inline-block;vertical-align:baseline}
+  .ps-blank{background:none;border:0;margin:0;padding:0 6px 3px;cursor:pointer;
+    font-family:var(--serif);font-weight:400;font-size:inherit;line-height:1.2;
+    color:var(--muted);border-bottom:2px solid var(--ink);
+    display:inline-flex;align-items:baseline;gap:8px;
+    -webkit-appearance:none;appearance:none;
+    transition:color .4s ease,border-color .4s ease}
+  .ps-blank:hover{color:var(--ink)}
+  .ps-blank:focus-visible{outline:2px solid #d97524;outline-offset:5px;border-radius:2px}
+  .ps-blank-text{display:inline-block;min-width:104px}
+  .ps-caret{font-size:.5em;line-height:1;color:var(--muted);
+    transform:translateY(-.18em);transition:transform .3s ease,color .4s ease}
+  .ps-blank[aria-expanded="true"] .ps-caret{transform:translateY(-.18em) rotate(180deg)}
+  .ps-blank.filled{color:#d97524;border-bottom-color:#d97524}
+  .ps-blank.filled .ps-blank-text{min-width:0}
+  .ps-blank.filled .ps-caret{color:#d97524}
+
+  /* custom dropdown / popover anchored at the blank */
+  .ps-menu{position:absolute;top:calc(100% + 10px);left:-4px;z-index:60;
+    margin:0;padding:6px;list-style:none;
+    background:var(--bone);border:1px solid var(--line);border-radius:5px;
+    box-shadow:0 20px 48px -22px rgba(33,29,22,.55);
+    min-width:248px;max-width:82vw}
+  .ps-menu[hidden]{display:none}
+  .ps-menu li{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(18px,4.8vw,22px);line-height:1.28;
+    padding:12px 15px;border-radius:3px;cursor:pointer;white-space:normal;
+    transition:background .2s ease,color .2s ease}
+  .ps-menu li:hover,.ps-menu li.focused{background:rgba(217,117,36,.1);color:#d97524}
+  .ps-menu li[aria-selected="true"]{color:#d97524}
+
+  .ps-hint{font-family:var(--sans);font-size:14px;color:var(--muted);
+    margin:30px 2px 0;line-height:1.6}
+
+  /* stage card groups - only one active at a time */
+  .ps-groups{margin-top:34px}
+  .ps-group{display:none}
+  .ps-group.active{display:block;animation:psfade .5s ease}
+  @keyframes psfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* quiet placeholder for stages with no cards yet */
+  .ps-soon{font-family:var(--serif);font-style:italic;color:var(--muted);
+    font-size:clamp(18px,5vw,21px);line-height:1.5;margin:6px 2px 0;max-width:26ch}
+
+  /* flip cards - tall rectangle; front shows the pain, tap to rotate to the back */
+  .pcard{perspective:1500px;margin-bottom:16px}
+  .pcard-inner{position:relative;display:grid;min-height:clamp(348px,82vw,404px);
+    transform-style:preserve-3d;cursor:pointer;
+    transition:transform .55s cubic-bezier(.4,.12,.2,1)}
+  .pcard.flipped .pcard-inner{transform:rotateY(180deg)}
+  .pcard-inner:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  .pcard-face{grid-area:1/1;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:36px 30px;
+    border:1px solid var(--line);border-radius:3px;background:var(--bone);
+    box-shadow:0 12px 32px -26px rgba(33,29,22,.5);
+    backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .pcard-back{transform:rotateY(180deg)}
+
+  /* front */
+  .pcard-front .pain{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(21px,5.6vw,26px);line-height:1.3;max-width:16ch;margin:0}
+  .pcard-flip{position:absolute;bottom:24px;left:0;right:0;
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted)}
+  .pcard-flip .glyph{font-size:17px;line-height:1;color:var(--accent);letter-spacing:0}
+
+  /* back */
+  .pcard-back .reframe{font-family:var(--serif);font-style:italic;color:var(--ink);
+    font-size:clamp(19px,5vw,22px);line-height:1.36;max-width:19ch;margin:0 0 16px}
+  .pcard-back .dowhat{font-family:var(--sans);font-size:15px;line-height:1.62;
+    color:var(--muted);max-width:30ch;margin:0 0 22px}
+  .pcard-back .seelink{font-family:var(--sans);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--line);
+    padding-bottom:3px;transition:color .3s ease,border-color .3s ease}
+  .pcard-back .seelink:hover{color:var(--ink);border-color:var(--ink)}
+</style>
+<noscript><style>.ps-group{display:block!important}.ps-hint{display:none}
+  .ps-menu{display:block!important;position:static;box-shadow:none;border:0;padding:0;margin:8px 0 0;min-width:0}
+  .ps-blank{border-bottom:0}.ps-caret{display:none}
+  .pcard-inner{display:block;min-height:0}
+  .pcard-face{backface-visibility:visible;-webkit-backface-visibility:visible}
+  .pcard-back{transform:none;border-top:0}
+  .pcard-flip{display:none}</style></noscript>
+</head>
+<body>
+
+<div class="ps-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
+
+<section class="ps" id="problems">
+  <div class="ps-wrap">
+    <span class="eyebrow">Where you are</span>
+    <h2 class="ps-head">Where are you right now?</h2>
+
+    <div class="ps-picker" role="group" aria-label="Choose your stage">
+      <p class="ps-sentence">I'm<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="psBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in where you are"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="psMenu" role="listbox" aria-label="Choose your stage" hidden>
+        <li role="option" data-stage="thinking" aria-selected="false">just thinking about it</li>
+        <li role="option" data-stage="opening" aria-selected="false">opening soon</li>
+        <li role="option" data-stage="struggling" aria-selected="false">open but facing issues</li>
+        <li role="option" data-stage="large-launch" aria-selected="false">planning a large F&amp;B launch</li>
+        <li role="option" data-stage="chain" aria-selected="false">running a large chain</li>
+      </ul></span></p>
+    </div>
+
+    <p class="ps-hint">Tap the blank and tell us where you are. We will show what tends to get in the way, and what we do about it.</p>
+
+    <div class="ps-groups">
+
+      <!-- Just thinking about it -->
+      <div class="ps-group" data-stage="thinking">
+        <p class="ps-soon">More on this stage soon.</p>
+      </div>
+
+      <!-- Opening soon -->
+      <div class="ps-group" data-stage="opening">
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="I have a concept, but no system behind it. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">I have a concept, but no system behind it.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">A great idea isn't an operation.</p>
+              <p class="dowhat">We turn your concept into documented standards - recipes, prep, roles - before day one.</p>
+              <a href="problem-concept-no-system.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="Opening day feels like chaos waiting to happen. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">Opening day feels like chaos waiting to happen.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Smooth service is built before the doors open.</p>
+              <p class="dowhat">We set up mise en place, SOPs and staff training so opening runs like your hundredth day.</p>
+              <a href="problem-opening-chaos.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Open but facing issues -->
+      <div class="ps-group" data-stage="struggling">
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="My food is great but people don't come back. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">My food is great but people don't come back.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Great food gets them once. Consistency brings them back.</p>
+              <p class="dowhat">We build the systems that make every plate the same.</p>
+              <a href="problem-food-no-repeat.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="Sales look fine but the profit disappears. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">Sales look fine but the profit disappears.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Revenue creates excitement. Margins build businesses.</p>
+              <p class="dowhat">We put someone on the numbers - food cost, yield, waste, labour - so profit stops leaking.</p>
+              <a href="problem-profit-leak.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="My team does it differently every shift. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">My team does it differently every shift.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">As many standards as employees is no standard at all.</p>
+              <p class="dowhat">We document the way it should be done, so quality doesn't depend on who showed up.</p>
+              <a href="problem-team-inconsistent.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planning a large F&B launch (reuses the former "grow" cards) -->
+      <div class="ps-group" data-stage="large-launch">
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="It works when I'm there. It falls apart when I'm not. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">It works when I'm there. It falls apart when I'm not.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">A business that needs you can't grow.</p>
+              <p class="dowhat">We build the systems and leadership so it runs without you in the room.</p>
+              <a href="problem-runs-on-you.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="I want a second location but can't replicate the first. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">I want a second location but can't replicate the first.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">You can't scale what isn't written down.</p>
+              <p class="dowhat">We turn your operation into a repeatable blueprint you can open again.</p>
+              <a href="problem-second-location.html" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Running a large chain -->
+      <div class="ps-group" data-stage="chain">
+        <p class="ps-soon">More on this stage soon.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.documentElement.className='';
+(function(){
+  var picker=document.querySelector('.ps-picker');
+  var blank=document.getElementById('psBlank');
+  var blankText=blank.querySelector('.ps-blank-text');
+  var menu=document.getElementById('psMenu');
+  var opts=[].slice.call(menu.querySelectorAll('li[role="option"]'));
+  var groups=[].slice.call(document.querySelectorAll('.ps-group'));
+  var hint=document.querySelector('.ps-hint');
+
+  function resetFlips(){
+    [].slice.call(document.querySelectorAll('.pcard.flipped')).forEach(function(c){
+      c.classList.remove('flipped');
+      var inner=c.querySelector('.pcard-inner'); if(inner){inner.setAttribute('aria-pressed','false');}
+    });
+  }
+  function clearFocused(){opts.forEach(function(o){o.classList.remove('focused');});}
+  function setFocused(li){clearFocused();if(li){li.classList.add('focused');}}
+  function openMenu(){
+    if(!menu.hidden){return;}
+    menu.hidden=false;
+    blank.setAttribute('aria-expanded','true');
+    setFocused(menu.querySelector('li[aria-selected="true"]')||opts[0]);
+  }
+  function closeMenu(){
+    if(menu.hidden){return;}
+    menu.hidden=true;
+    blank.setAttribute('aria-expanded','false');
+    clearFocused();
+  }
+  function activate(key){
+    var chosen=opts.filter(function(o){return o.getAttribute('data-stage')===key;})[0];
+    if(!chosen){return;}
+    blankText.textContent=chosen.textContent;
+    blank.classList.add('filled');
+    opts.forEach(function(o){o.setAttribute('aria-selected',o===chosen?'true':'false');});
+    groups.forEach(function(g){g.classList.toggle('active',g.getAttribute('data-stage')===key);});
+    resetFlips();
+    if(hint){hint.style.display='none';}
+    closeMenu();
+  }
+
+  blank.addEventListener('click',function(e){
+    e.stopPropagation();
+    if(menu.hidden){openMenu();}else{closeMenu();}
+  });
+  opts.forEach(function(o){
+    o.addEventListener('click',function(e){
+      e.stopPropagation();
+      activate(o.getAttribute('data-stage'));
+      blank.focus();
+    });
+    o.addEventListener('mousemove',function(){setFocused(o);});
+  });
+  document.addEventListener('click',function(e){
+    if(!menu.hidden && !blank.contains(e.target) && !menu.contains(e.target)){closeMenu();}
+  });
+  blank.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      if(menu.hidden){openMenu();}
+      else{
+        var cur=menu.querySelector('li.focused');
+        if(e.key==='ArrowDown'){
+          var ni=cur?opts.indexOf(cur)+1:0; if(ni>=opts.length){ni=0;} setFocused(opts[ni]);
+        }else if(cur){activate(cur.getAttribute('data-stage'));}
+      }
+    }else if(e.key==='ArrowUp'){
+      e.preventDefault();
+      if(menu.hidden){openMenu();}
+      else{var cur=menu.querySelector('li.focused');var pi=cur?opts.indexOf(cur)-1:opts.length-1;if(pi<0){pi=opts.length-1;}setFocused(opts[pi]);}
+    }else if(e.key==='Escape'){closeMenu();}
+  });
+
+  function toggleFlip(inner){
+    var card=inner.closest('.pcard');
+    var flipped=card.classList.toggle('flipped');
+    inner.setAttribute('aria-pressed',flipped?'true':'false');
+  }
+  [].slice.call(document.querySelectorAll('.pcard-inner')).forEach(function(inner){
+    inner.addEventListener('click',function(e){
+      if(e.target.closest('.seelink')){return;}
+      toggleFlip(inner);
+    });
+    inner.addEventListener('keydown',function(e){
+      if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFlip(inner);}
+    });
+  });
+
+  // Deep-link: ?stage=<slug> pre-fills the blank and shows that stage on load.
+  // Legacy ?stage=grow maps to the new large-launch stage so old ads still land.
+  var params=new URLSearchParams(window.location.search);
+  var pre=params.get('stage');
+  if(pre==='grow'){pre='large-launch';}
+  var valid=opts.filter(function(o){return o.getAttribute('data-stage')===pre;})[0];
+  if(valid){
+    activate(pre);
+    var sec=document.getElementById('problems');
+    if(sec){setTimeout(function(){sec.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+  }else{
+    // First visit with no deep-link: invite the choice by auto-opening the dropdown.
+    setTimeout(function(){blank.focus();openMenu();},120);
+  }
+})();
+</script>
+</body>
+</html>
