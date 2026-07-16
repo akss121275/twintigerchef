@@ -9,18 +9,43 @@
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-  .picker-field{margin:26px 0 0;max-width:560px}
-  .picker-select{width:100%;font-family:var(--serif);font-weight:400;
-    font-size:clamp(18px,1.7vw,21px);color:var(--ink);background-color:var(--bone);
-    border:1px solid var(--line);border-radius:2px;padding:18px 54px 18px 22px;line-height:1.3;
-    cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23d97524' stroke-width='1.5'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 22px center;
-    transition:border-color .2s ease}
-  .picker-select:hover{border-color:var(--accent)}
-  .picker-select:focus{outline:none;border-color:var(--brand)}
-  .picker-select:invalid{color:var(--muted)}
-  .picker-select option{color:var(--ink)}
+  /* fill-in-the-blank sentence picker: underlined slot + custom popover (not a native select) */
+  .ps-picker{margin:26px 0 0;max-width:620px}
+  .ps-sentence{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(24px,4.4vw,34px);line-height:1.5;margin:0;max-width:22ch}
+  .ps-sentence + .ps-sentence{margin-top:12px}
+  .ps-sentence[hidden]{display:none}
+  .ps-blank-wrap{position:relative;display:inline-block;vertical-align:baseline}
+  .ps-blank{background:none;border:0;margin:0;padding:0 6px 3px;cursor:pointer;
+    font-family:var(--serif);font-weight:400;font-size:inherit;line-height:1.2;
+    color:var(--muted);border-bottom:2px solid var(--ink);
+    display:inline-flex;align-items:baseline;gap:8px;
+    -webkit-appearance:none;appearance:none;
+    transition:color .4s ease,border-color .4s ease}
+  .ps-blank:hover{color:var(--ink)}
+  .ps-blank:focus,.ps-blank:focus-visible{outline:none}
+  .ps-blank-text{display:inline-block;min-width:104px}
+  .ps-caret{font-size:.5em;line-height:1;color:var(--muted);
+    transform:translateY(-.18em);transition:transform .3s ease,color .4s ease}
+  .ps-blank[aria-expanded="true"] .ps-caret{transform:translateY(-.18em) rotate(180deg)}
+  .ps-blank.filled{color:var(--brand);border-bottom-color:var(--brand)}
+  .ps-blank.filled .ps-blank-text{min-width:0}
+  .ps-blank.filled .ps-caret{color:var(--brand)}
+
+  /* custom dropdown / popover anchored at the blank */
+  .ps-menu{position:absolute;top:calc(100% + 10px);left:-4px;z-index:60;
+    margin:0;padding:6px;list-style:none;
+    background:var(--bone);border:1px solid var(--line);border-radius:5px;
+    box-shadow:0 20px 48px -22px rgba(33,29,22,.55);
+    min-width:280px;max-width:86vw}
+  .ps-menu[hidden]{display:none}
+  .ps-menu li{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(17px,3.6vw,20px);line-height:1.28;
+    padding:12px 15px;border-radius:3px;cursor:pointer;white-space:normal;
+    transition:background .2s ease,color .2s ease}
+  .ps-menu li:hover,.ps-menu li.focused{background:rgba(217,117,36,.1);color:var(--brand)}
+  .ps-menu li[aria-selected="true"]{color:var(--brand)}
+
   .cta-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 0}
   .cta-btn{display:inline-block;font-family:var(--sans);font-weight:400;font-size:13px;
     letter-spacing:.2em;text-transform:uppercase;color:var(--ink);border:1px solid var(--ink);
@@ -66,16 +91,10 @@
     <span class="step-label">Start here</span>
     <p class="picker-lead">Where are you on your restaurant journey?</p>
 
-    <div class="picker-field">
-      <select class="picker-select" id="q1" required aria-label="I am...">
-        <option value="" selected disabled hidden>I am...</option>
-      </select>
-    </div>
+    <div class="ps-picker" role="group" aria-label="Tell us where you are and what you want to do">
+      <p class="ps-sentence">I am<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="sitBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in where you are"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="sitMenu" role="listbox" aria-label="Where you are" hidden></ul></span></p>
 
-    <div class="picker-field q2" id="q2" hidden>
-      <select class="picker-select" id="q2select" required aria-label="I want to...">
-        <option value="" selected disabled hidden>I want to...</option>
-      </select>
+      <p class="ps-sentence" id="goalSentence" hidden>and I want to<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="goalBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in what you want to do"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="goalMenu" role="listbox" aria-label="What you want to do" hidden></ul></span></p>
     </div>
 
     <div class="result" id="result" hidden aria-live="polite"></div>
