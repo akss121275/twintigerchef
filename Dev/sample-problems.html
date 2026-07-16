@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where are you right now? - Twin Tiger Chefs (Dev sample)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ---- Dev prototype: mobile-first problem / solution section ---- */
+  body{background:var(--bone)}
+  .ps-top{display:flex;justify-content:center;padding:26px 0 4px}
+  .ps-top img{height:78px;width:auto;display:block}
+  section.ps{padding:56px 0 110px}
+  .ps-wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .ps .eyebrow{margin-bottom:18px}
+  .ps h2.ps-head{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(31px,8vw,48px);line-height:1.08;max-width:14ch;margin:0 0 30px}
+
+  /* stage selector - stacked, full width, one thumb */
+  .ps-stages{display:flex;flex-direction:column;gap:12px}
+  .ps-stage{width:100%;text-align:left;background:var(--bone);border:1px solid var(--line);
+    border-radius:3px;padding:18px 22px;font-family:var(--sans);font-weight:400;font-size:13px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    -webkit-appearance:none;appearance:none;
+    transition:border-color .35s ease,background .35s ease,color .35s ease}
+  .ps-stage:hover{border-color:var(--muted)}
+  .ps-stage:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  .ps-stage[aria-pressed="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .ps-stage .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);
+    flex:none;opacity:0;transform:scale(.5);transition:opacity .35s ease,transform .35s ease}
+  .ps-stage[aria-pressed="true"] .dot{opacity:1;transform:scale(1)}
+
+  .ps-hint{font-family:var(--sans);font-size:14px;color:var(--muted);
+    margin:22px 2px 0;line-height:1.6}
+
+  /* stage card groups - only one active at a time */
+  .ps-groups{margin-top:34px}
+  .ps-group{display:none}
+  .ps-group.active{display:block;animation:psfade .5s ease}
+  @keyframes psfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* problem cards - front shows the pain; tap to expand */
+  .pcard{border:1px solid var(--line);border-radius:3px;background:var(--bone);
+    margin-bottom:14px;box-shadow:0 12px 32px -26px rgba(33,29,22,.5);overflow:hidden}
+  .pcard-head{width:100%;text-align:left;background:transparent;border:0;cursor:pointer;
+    padding:22px 24px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+    font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(19px,5.4vw,24px);line-height:1.28;-webkit-appearance:none;appearance:none}
+  .pcard-head:focus-visible{outline:2px solid var(--brand);outline-offset:-4px}
+  .pcard-mark{position:relative;width:16px;height:16px;flex:none;margin-top:7px}
+  .pcard-mark::before,.pcard-mark::after{content:"";position:absolute;background:var(--brand);
+    transition:transform .3s ease}
+  .pcard-mark::before{top:7px;left:0;width:16px;height:2px}
+  .pcard-mark::after{top:0;left:7px;width:2px;height:16px}
+  .pcard.open .pcard-mark::after{transform:scaleY(0)}
+  .pcard-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+  .pcard.open .pcard-body{grid-template-rows:1fr}
+  .pcard-body-inner{overflow:hidden;min-height:0}
+  .pcard-content{padding:2px 24px 26px}
+  .pcard-content .reframe{font-family:var(--serif);font-style:italic;font-size:19px;
+    color:var(--ink);margin:0 0 14px;line-height:1.4}
+  .pcard-content .dowhat{font-family:var(--sans);font-size:15.5px;line-height:1.62;
+    color:var(--muted);margin:0 0 18px}
+  .pcard-content .seelink{display:inline-block;font-family:var(--sans);font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+    border-bottom:1px solid var(--line);padding-bottom:3px;
+    transition:color .3s ease,border-color .3s ease}
+  .pcard-content .seelink:hover{color:var(--ink);border-color:var(--ink)}
+</style>
+<noscript><style>.ps-group{display:block!important}.ps-hint{display:none}.pcard-body{grid-template-rows:1fr}</style></noscript>
+</head>
+<body>
+
+<div class="ps-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
+
+<section class="ps" id="problems">
+  <div class="ps-wrap">
+    <span class="eyebrow">Where you are</span>
+    <h2 class="ps-head">Where are you right now?</h2>
+
+    <div class="ps-stages" role="group" aria-label="Choose your stage">
+      <button type="button" class="ps-stage" data-stage="opening" aria-pressed="false">
+        <span>Opening soon</span><span class="dot" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="ps-stage" data-stage="struggling" aria-pressed="false">
+        <span>Open but struggling</span><span class="dot" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="ps-stage" data-stage="grow" aria-pressed="false">
+        <span>Ready to grow</span><span class="dot" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <p class="ps-hint">Pick where you are. We will show what tends to get in the way, and what we do about it.</p>
+
+    <div class="ps-groups">
+
+      <!-- Opening soon -->
+      <div class="ps-group" data-stage="opening">
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>I have a concept, but no system behind it.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">A great idea isn't an operation.</p>
+            <p class="dowhat">We turn your concept into documented standards - recipes, prep, roles - before day one.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>Opening day feels like chaos waiting to happen.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">Smooth service is built before the doors open.</p>
+            <p class="dowhat">We set up mise en place, SOPs and staff training so opening runs like your hundredth day.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+      </div>
+
+      <!-- Open but struggling -->
+      <div class="ps-group" data-stage="struggling">
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>My food is great but people don't come back.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">Great food gets them once. Consistency brings them back.</p>
+            <p class="dowhat">We build the systems that make every plate the same.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>Sales look fine but the profit disappears.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">Revenue creates excitement. Margins build businesses.</p>
+            <p class="dowhat">We put someone on the numbers - food cost, yield, waste, labour - so profit stops leaking.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>My team does it differently every shift.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">As many standards as employees is no standard at all.</p>
+            <p class="dowhat">We document the way it should be done, so quality doesn't depend on who showed up.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+      </div>
+
+      <!-- Ready to grow -->
+      <div class="ps-group" data-stage="grow">
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>It works when I'm there. It falls apart when I'm not.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">A business that needs you can't grow.</p>
+            <p class="dowhat">We build the systems and leadership so it runs without you in the room.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+        <div class="pcard">
+          <button type="button" class="pcard-head" aria-expanded="false">
+            <span>I want a second location but can't replicate the first.</span>
+            <span class="pcard-mark" aria-hidden="true"></span>
+          </button>
+          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
+            <p class="reframe">You can't scale what isn't written down.</p>
+            <p class="dowhat">We turn your operation into a repeatable blueprint you can open again.</p>
+            <a href="#work" class="seelink">See how we work &gt;</a>
+          </div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.documentElement.className='';
+(function(){
+  var stages=[].slice.call(document.querySelectorAll('.ps-stage'));
+  var groups=[].slice.call(document.querySelectorAll('.ps-group'));
+  var hint=document.querySelector('.ps-hint');
+  function closeAllCards(){
+    [].slice.call(document.querySelectorAll('.pcard.open')).forEach(function(c){
+      c.classList.remove('open');
+      var h=c.querySelector('.pcard-head'); if(h){h.setAttribute('aria-expanded','false');}
+    });
+  }
+  stages.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var key=btn.getAttribute('data-stage');
+      var wasActive=btn.getAttribute('aria-pressed')==='true';
+      stages.forEach(function(b){b.setAttribute('aria-pressed','false');});
+      groups.forEach(function(g){g.classList.remove('active');});
+      closeAllCards();
+      if(!wasActive){
+        btn.setAttribute('aria-pressed','true');
+        var g=document.querySelector('.ps-group[data-stage="'+key+'"]');
+        if(g){g.classList.add('active');}
+        if(hint){hint.style.display='none';}
+      }else if(hint){
+        hint.style.display='';
+      }
+    });
+  });
+  [].slice.call(document.querySelectorAll('.pcard-head')).forEach(function(h){
+    h.addEventListener('click',function(){
+      var card=h.closest('.pcard');
+      var open=card.classList.toggle('open');
+      h.setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+})();
+</script>
+</body>
+</html>
