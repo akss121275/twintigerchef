@@ -76,6 +76,92 @@
 <body>
 
 <div class="ps-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where are you right now? - Twin Tiger Chefs (Dev sample)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ---- Dev prototype: mobile-first problem / solution section (flip cards) ---- */
+  body{background:var(--bone)}
+  .ps-top{display:flex;justify-content:center;padding:26px 0 4px}
+  .ps-top img{height:78px;width:auto;display:block}
+  section.ps{padding:56px 0 110px}
+  .ps-wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .ps .eyebrow{margin-bottom:18px}
+  .ps h2.ps-head{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(31px,8vw,48px);line-height:1.08;max-width:14ch;margin:0 0 30px}
+
+  /* stage selector - stacked, full width, one thumb */
+  .ps-stages{display:flex;flex-direction:column;gap:12px}
+  .ps-stage{width:100%;text-align:left;background:var(--bone);border:1px solid var(--line);
+    border-radius:3px;padding:18px 22px;font-family:var(--sans);font-weight:400;font-size:13px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    -webkit-appearance:none;appearance:none;
+    transition:border-color .35s ease,background .35s ease,color .35s ease}
+  .ps-stage:hover{border-color:var(--muted)}
+  .ps-stage:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  .ps-stage[aria-pressed="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .ps-stage .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);
+    flex:none;opacity:0;transform:scale(.5);transition:opacity .35s ease,transform .35s ease}
+  .ps-stage[aria-pressed="true"] .dot{opacity:1;transform:scale(1)}
+
+  .ps-hint{font-family:var(--sans);font-size:14px;color:var(--muted);
+    margin:22px 2px 0;line-height:1.6}
+
+  /* stage card groups - only one active at a time */
+  .ps-groups{margin-top:34px}
+  .ps-group{display:none}
+  .ps-group.active{display:block;animation:psfade .5s ease}
+  @keyframes psfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* flip cards - tall rectangle; front shows the pain, tap to rotate to the back */
+  .pcard{perspective:1500px;margin-bottom:16px}
+  .pcard-inner{position:relative;display:grid;min-height:clamp(348px,82vw,404px);
+    transform-style:preserve-3d;cursor:pointer;
+    transition:transform .55s cubic-bezier(.4,.12,.2,1)}
+  .pcard.flipped .pcard-inner{transform:rotateY(180deg)}
+  .pcard-inner:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+  .pcard-face{grid-area:1/1;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:36px 30px;
+    border:1px solid var(--line);border-radius:3px;background:var(--bone);
+    box-shadow:0 12px 32px -26px rgba(33,29,22,.5);
+    backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .pcard-back{transform:rotateY(180deg)}
+
+  /* front */
+  .pcard-front .pain{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(21px,5.6vw,26px);line-height:1.3;max-width:16ch;margin:0}
+  .pcard-flip{position:absolute;bottom:24px;left:0;right:0;
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted)}
+  .pcard-flip .glyph{font-size:17px;line-height:1;color:var(--accent);letter-spacing:0}
+
+  /* back */
+  .pcard-back .reframe{font-family:var(--serif);font-style:italic;color:var(--ink);
+    font-size:clamp(19px,5vw,22px);line-height:1.36;max-width:19ch;margin:0 0 16px}
+  .pcard-back .dowhat{font-family:var(--sans);font-size:15px;line-height:1.62;
+    color:var(--muted);max-width:30ch;margin:0 0 22px}
+  .pcard-back .seelink{font-family:var(--sans);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--line);
+    padding-bottom:3px;transition:color .3s ease,border-color .3s ease}
+  .pcard-back .seelink:hover{color:var(--ink);border-color:var(--ink)}
+</style>
+<noscript><style>.ps-group{display:block!important}.ps-hint{display:none}
+  .pcard-inner{display:block;min-height:0}
+  .pcard-face{backface-visibility:visible;-webkit-backface-visibility:visible}
+  .pcard-back{transform:none;border-top:0}
+  .pcard-flip{display:none}</style></noscript>
+</head>
+<body>
+
+<div class="ps-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
 
 <section class="ps" id="problems">
   <div class="ps-wrap">
@@ -101,89 +187,103 @@
       <!-- Opening soon -->
       <div class="ps-group" data-stage="opening">
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>I have a concept, but no system behind it.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">A great idea isn't an operation.</p>
-            <p class="dowhat">We turn your concept into documented standards - recipes, prep, roles - before day one.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="I have a concept, but no system behind it. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">I have a concept, but no system behind it.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">A great idea isn't an operation.</p>
+              <p class="dowhat">We turn your concept into documented standards - recipes, prep, roles - before day one.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>Opening day feels like chaos waiting to happen.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">Smooth service is built before the doors open.</p>
-            <p class="dowhat">We set up mise en place, SOPs and staff training so opening runs like your hundredth day.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="Opening day feels like chaos waiting to happen. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">Opening day feels like chaos waiting to happen.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Smooth service is built before the doors open.</p>
+              <p class="dowhat">We set up mise en place, SOPs and staff training so opening runs like your hundredth day.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Open but struggling -->
       <div class="ps-group" data-stage="struggling">
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>My food is great but people don't come back.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">Great food gets them once. Consistency brings them back.</p>
-            <p class="dowhat">We build the systems that make every plate the same.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="My food is great but people don't come back. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">My food is great but people don't come back.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Great food gets them once. Consistency brings them back.</p>
+              <p class="dowhat">We build the systems that make every plate the same.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>Sales look fine but the profit disappears.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">Revenue creates excitement. Margins build businesses.</p>
-            <p class="dowhat">We put someone on the numbers - food cost, yield, waste, labour - so profit stops leaking.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="Sales look fine but the profit disappears. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">Sales look fine but the profit disappears.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">Revenue creates excitement. Margins build businesses.</p>
+              <p class="dowhat">We put someone on the numbers - food cost, yield, waste, labour - so profit stops leaking.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>My team does it differently every shift.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">As many standards as employees is no standard at all.</p>
-            <p class="dowhat">We document the way it should be done, so quality doesn't depend on who showed up.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="My team does it differently every shift. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">My team does it differently every shift.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">As many standards as employees is no standard at all.</p>
+              <p class="dowhat">We document the way it should be done, so quality doesn't depend on who showed up.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Ready to grow -->
       <div class="ps-group" data-stage="grow">
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>It works when I'm there. It falls apart when I'm not.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">A business that needs you can't grow.</p>
-            <p class="dowhat">We build the systems and leadership so it runs without you in the room.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="It works when I'm there. It falls apart when I'm not. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">It works when I'm there. It falls apart when I'm not.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">A business that needs you can't grow.</p>
+              <p class="dowhat">We build the systems and leadership so it runs without you in the room.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
         <div class="pcard">
-          <button type="button" class="pcard-head" aria-expanded="false">
-            <span>I want a second location but can't replicate the first.</span>
-            <span class="pcard-mark" aria-hidden="true"></span>
-          </button>
-          <div class="pcard-body"><div class="pcard-body-inner"><div class="pcard-content">
-            <p class="reframe">You can't scale what isn't written down.</p>
-            <p class="dowhat">We turn your operation into a repeatable blueprint you can open again.</p>
-            <a href="#work" class="seelink">See how we work &gt;</a>
-          </div></div></div>
+          <div class="pcard-inner" role="button" tabindex="0" aria-pressed="false" aria-label="I want a second location but can't replicate the first. Tap to see how we work.">
+            <div class="pcard-face pcard-front">
+              <p class="pain">I want a second location but can't replicate the first.</p>
+              <span class="pcard-flip"><span class="glyph" aria-hidden="true">&#8635;</span>Tap to see</span>
+            </div>
+            <div class="pcard-face pcard-back">
+              <p class="reframe">You can't scale what isn't written down.</p>
+              <p class="dowhat">We turn your operation into a repeatable blueprint you can open again.</p>
+              <a href="#work" class="seelink">See how we work &gt;</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -197,10 +297,10 @@ document.documentElement.className='';
   var stages=[].slice.call(document.querySelectorAll('.ps-stage'));
   var groups=[].slice.call(document.querySelectorAll('.ps-group'));
   var hint=document.querySelector('.ps-hint');
-  function closeAllCards(){
-    [].slice.call(document.querySelectorAll('.pcard.open')).forEach(function(c){
-      c.classList.remove('open');
-      var h=c.querySelector('.pcard-head'); if(h){h.setAttribute('aria-expanded','false');}
+  function resetFlips(){
+    [].slice.call(document.querySelectorAll('.pcard.flipped')).forEach(function(c){
+      c.classList.remove('flipped');
+      var inner=c.querySelector('.pcard-inner'); if(inner){inner.setAttribute('aria-pressed','false');}
     });
   }
   stages.forEach(function(btn){
@@ -209,7 +309,7 @@ document.documentElement.className='';
       var wasActive=btn.getAttribute('aria-pressed')==='true';
       stages.forEach(function(b){b.setAttribute('aria-pressed','false');});
       groups.forEach(function(g){g.classList.remove('active');});
-      closeAllCards();
+      resetFlips();
       if(!wasActive){
         btn.setAttribute('aria-pressed','true');
         var g=document.querySelector('.ps-group[data-stage="'+key+'"]');
@@ -220,11 +320,18 @@ document.documentElement.className='';
       }
     });
   });
-  [].slice.call(document.querySelectorAll('.pcard-head')).forEach(function(h){
-    h.addEventListener('click',function(){
-      var card=h.closest('.pcard');
-      var open=card.classList.toggle('open');
-      h.setAttribute('aria-expanded',open?'true':'false');
+  function toggleFlip(inner){
+    var card=inner.closest('.pcard');
+    var flipped=card.classList.toggle('flipped');
+    inner.setAttribute('aria-pressed',flipped?'true':'false');
+  }
+  [].slice.call(document.querySelectorAll('.pcard-inner')).forEach(function(inner){
+    inner.addEventListener('click',function(e){
+      if(e.target.closest('.seelink')){return;}
+      toggleFlip(inner);
+    });
+    inner.addEventListener('keydown',function(e){
+      if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFlip(inner);}
     });
   });
 })();
