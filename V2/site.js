@@ -52,48 +52,48 @@
     });
   });
 
-  /* ---- home guided picker: two-level progressive reveal ---- */
+  /* ---- home guided picker: two dropdowns, progressive reveal ---- */
   var picker=document.getElementById('picker');
   if(!picker || !window.TT) return;
   var data=window.TT;
   var q1=document.getElementById('q1');
-  var q2=document.getElementById('q2');
-  var q2grid=document.getElementById('q2grid');
-  var q2lead=document.getElementById('q2lead');
+  var q2wrap=document.getElementById('q2');
+  var q2=document.getElementById('q2select');
   var result=document.getElementById('result');
   var curSit=null;
 
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-  /* build Q1 tiles */
+  /* build Q1 options */
   data.situations.forEach(function(sit,si){
-    var b=document.createElement('button');
-    b.type='button';b.className='tile';b.textContent=sit.label;
-    b.addEventListener('click',function(){selectSituation(si,b);});
-    q1.appendChild(b);
+    var o=document.createElement('option');
+    o.value=String(si);o.textContent=sit.label;
+    q1.appendChild(o);
   });
 
-  function selectSituation(si,btn){
+  q1.addEventListener('change',function(){
+    var si=parseInt(q1.value,10);
+    if(isNaN(si)) return;
     curSit=si;
-    [].slice.call(q1.querySelectorAll('.tile')).forEach(function(t){t.classList.remove('selected');});
-    btn.classList.add('selected');
     var sit=data.situations[si];
-    q2lead.textContent='I want to...';
-    q2grid.innerHTML='';
+    q2.innerHTML='';
+    var ph=document.createElement('option');
+    ph.value='';ph.selected=true;ph.disabled=true;ph.hidden=true;ph.textContent='I want to...';
+    q2.appendChild(ph);
     sit.goals.forEach(function(goal,gi){
-      var b=document.createElement('button');
-      b.type='button';b.className='tile';b.textContent=goal.label;
-      b.addEventListener('click',function(){selectGoal(gi,b);});
-      q2grid.appendChild(b);
+      var o=document.createElement('option');
+      o.value=String(gi);o.textContent=goal.label;
+      q2.appendChild(o);
     });
-    q2.hidden=false;
+    q2.value='';
+    q2wrap.hidden=false;
     result.hidden=true;result.innerHTML='';
-    q2.scrollIntoView({behavior:'smooth',block:'center'});
-  }
+    q2wrap.scrollIntoView({behavior:'smooth',block:'center'});
+  });
 
-  function selectGoal(gi,btn){
-    [].slice.call(q2grid.querySelectorAll('.tile')).forEach(function(t){t.classList.remove('selected');});
-    btn.classList.add('selected');
+  q2.addEventListener('change',function(){
+    var gi=parseInt(q2.value,10);
+    if(isNaN(gi) || curSit===null) return;
     var goal=data.situations[curSit].goals[gi];
     var linksHtml=(goal.links||[]).map(function(l){
       return '<a class="r-link" href="'+l.href+'">'+esc(l.t)+'</a>';
@@ -118,5 +118,5 @@
       '</div>';
     result.hidden=false;
     result.scrollIntoView({behavior:'smooth',block:'center'});
-  }
+  });
 })();
