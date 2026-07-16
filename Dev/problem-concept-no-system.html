@@ -9,8 +9,32 @@
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="problem.css">
+<style>
+  /* ---- Shared top nav (i2-nav) ---- */
+  .i2-nav{position:sticky;top:0;z-index:80;display:flex;align-items:center;
+    justify-content:space-between;gap:14px;padding:11px clamp(18px,5vw,40px);
+    background:rgba(33,29,22,.94);backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(216,207,191,.14)}
+  .i2-brand{font-family:var(--serif);font-weight:400;color:#efe8dd;
+    font-size:clamp(15px,4.2vw,19px);letter-spacing:.02em;white-space:nowrap;flex:0 0 auto}
+  .i2-links{display:flex;align-items:center;justify-content:flex-end;flex:1 1 auto;
+    gap:clamp(13px,3.6vw,26px)}
+  .i2-links a{font-family:var(--sans);font-weight:400;color:#e9e1d3;opacity:.85;
+    font-size:clamp(10px,2.9vw,12px);letter-spacing:.16em;text-transform:uppercase;
+    white-space:nowrap;transition:opacity .3s ease,color .3s ease}
+  .i2-links a:hover{opacity:1;color:#d97524}
+</style>
 </head>
 <body>
+<nav class="i2-nav" aria-label="Primary">
+  <a href="index2.html" class="i2-brand" aria-label="Twin Tiger Chefs home">Twin Tiger Chefs</a>
+  <div class="i2-links">
+    <a href="studio.html">The Studio</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="studio.html#contact">Contact</a>
+  </div>
+</nav>
+
 
 <div class="pd-top"><a href="index.html" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs"></a></div>
 
