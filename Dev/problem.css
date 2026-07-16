@@ -1,0 +1,40 @@
+/* ---- Twin Tiger Chefs (Dev sample): shared in-depth problem page ---- */
+body{background:var(--bone)}
+.pd-top{display:flex;justify-content:center;padding:26px 0 6px}
+.pd-top img{height:74px;width:auto;display:block}
+.pd-wrap{max-width:680px;margin:0 auto;padding:0 24px}
+main.pd{padding:34px 0 90px}
+.pd .eyebrow{margin-bottom:18px}
+.pd-pain{font-family:var(--serif);font-weight:400;color:var(--ink);
+  font-size:clamp(31px,8vw,50px);line-height:1.08;max-width:16ch;margin:0 0 22px}
+.pd-reframe{font-family:var(--serif);font-style:italic;color:var(--ink);
+  font-size:clamp(20px,5.2vw,26px);line-height:1.36;max-width:24ch;margin:0 0 32px}
+.pd-body p{font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.75;
+  color:var(--muted);max-width:56ch;margin:0 0 18px}
+.pd-do{margin:36px 0 8px;border-top:1px solid var(--line);padding-top:26px}
+.pd-do h2{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+.pd-do ul{list-style:none}
+.pd-do li{font-family:var(--sans);font-size:15px;color:var(--ink);
+  padding:12px 0;border-bottom:1px solid var(--line)}
+
+/* contact / CTA block */
+.pd-contact{margin-top:54px;padding:38px 28px;background:var(--sand);border-radius:3px;text-align:center}
+.pd-contact .eyebrow{margin-bottom:12px}
+.pd-contact h2{font-family:var(--serif);font-weight:400;color:var(--ink);
+  font-size:clamp(24px,6vw,32px);line-height:1.14;margin:0 0 8px}
+.pd-contact p{font-family:var(--sans);font-weight:300;font-size:15px;color:var(--muted);
+  margin:0 auto 26px;max-width:34ch}
+.pd-actions{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:0 auto}
+.pd-btn{display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--sans);font-weight:400;font-size:13px;letter-spacing:.18em;
+  text-transform:uppercase;padding:16px 22px;border-radius:3px;
+  border:1px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;
+  transition:background .35s ease,color .35s ease,border-color .35s ease}
+.pd-btn:hover{background:var(--ink);color:var(--bone)}
+.pd-btn.primary{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.pd-btn.primary:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+.pd-back{display:inline-block;margin-top:38px;font-family:var(--sans);font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  border-bottom:1px solid var(--line);padding-bottom:3px}
+.pd-back:hover{color:var(--ink);border-color:var(--ink)}
