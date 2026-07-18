@@ -92,13 +92,13 @@
   /* Hero scroll cue */
   .hero-scroll{position:absolute;left:50%;bottom:clamp(16px,3vh,32px);transform:translateX(-50%);
     z-index:6;display:flex;align-items:center;justify-content:center;
-    width:44px;height:44px;border-radius:50%;
+    width:52px;height:52px;border-radius:50%;
     background:rgba(28,24,18,.30);border:1px solid rgba(244,239,230,.34);
     -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
     color:#f4efe6;text-decoration:none;cursor:pointer;opacity:.9;
     transition:opacity .5s ease,background .3s ease,border-color .3s ease}
   .hero-scroll:hover{background:rgba(28,24,18,.46);border-color:rgba(244,239,230,.58);opacity:1}
-  .hero-scroll svg{width:20px;height:20px;display:block;
+  .hero-scroll svg{width:24px;height:24px;display:block;
     filter:drop-shadow(0 1px 3px rgba(20,17,12,.45));
     animation:heroScrollBounce 2.4s ease-in-out infinite}
   .hero-scroll.is-hidden{opacity:0;pointer-events:none}
@@ -203,7 +203,7 @@
 
   </div>
   <a class="hero-scroll" href="#journey" aria-label="Scroll down to explore">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 13l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </header>
 <script>
@@ -582,5 +582,6 @@
 </script>
 </body>
 </html>
+
 
 
