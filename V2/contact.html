@@ -52,30 +52,25 @@
     <span class="eyebrow">Let us talk</span>
     <h2>Tell us about your restaurant.</h2>
     <p class="manifesto">Not only chefs. Not only consultants. A studio built on art and craft.</p>
-    <div class="consult">
-      <h3><a class="cta-call-head" href="tel:+917680941272">Call for a free consultation</a></h3>
-      <p class="hours">9am - 11am and 3pm - 7pm</p>
-      <div class="cta-actions">
-        <a class="cta-btn amber" href="tel:+917680941272">Call</a>
-        <a class="cta-btn" href="https://wa.me/917680941272">WhatsApp</a>
-        <a class="cta-btn" href="mailto:drunkenswamihead@gmail.com">Email</a>
-      </div>
-    </div>
-    <p style="font-family:var(--serif);font-style:italic;color:rgba(233,225,211,.8);margin-bottom:22px">Or send us a message and we will call you back.</p>
+    <p style="font-family:var(--serif);font-style:italic;color:rgba(233,225,211,.8);margin-bottom:22px">Send us a message and we will call you back.</p>
     <form class="form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="YOUR-WEB3FORMS-KEY">
       <input type="hidden" name="subject" value="New enquiry from Twin Tiger Chefs website">
+      <select class="full" name="client_type">
+        <option value="" disabled selected>Where are you on your restaurant journey?</option>
+        <option value="I'm Just Planning" data-stage="planning">I'm Just Planning</option>
+        <option value="I'm Looking for a Location" data-stage="location-search">I'm Looking for a Location</option>
+        <option value="I Have a Location" data-stage="have-location">I Have a Location</option>
+        <option value="We're Ready to Open" data-stage="ready-to-open">We're Ready to Open</option>
+        <option value="My Restaurant Isn't Performing" data-stage="underperforming">My Restaurant Isn't Performing</option>
+        <option value="I Want to Revamp My Restaurant" data-stage="revamp">I Want to Revamp My Restaurant</option>
+        <option value="My Restaurant Has Closed" data-stage="closed">My Restaurant Has Closed</option>
+        <option value="I Want to Expand" data-stage="expand">I Want to Expand</option>
+      </select>
       <input type="text" name="name" placeholder="Name" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="tel" class="full" name="phone" placeholder="Phone" required>
       <input type="text" class="full" name="project" placeholder="Your restaurant or project">
-      <select class="full" name="client_type">
-        <option value="" disabled selected>What best describes you?</option>
-        <option value="New restaurant">New restaurant</option>
-        <option value="Existing restaurant">Existing restaurant</option>
-        <option value="New F&amp;B venture">New F&amp;B venture</option>
-        <option value="Established group / chain">Established group / chain</option>
-      </select>
       <textarea class="full" name="message" placeholder="Tell us a little about it" required></textarea>
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <button class="cta submit" type="submit">Send</button>
