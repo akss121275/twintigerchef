@@ -9,63 +9,11 @@
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* fill-in-the-blank sentence picker: underlined slot + custom popover (not a native select) */
-  .ps-picker{margin:26px 0 0;max-width:620px}
-  .ps-sentence{font-family:var(--serif);font-weight:400;color:var(--ink);
-    font-size:clamp(24px,4.4vw,34px);line-height:1.5;margin:0;max-width:22ch}
-  .ps-sentence + .ps-sentence{margin-top:12px}
-  .ps-sentence[hidden]{display:none}
-  .ps-blank-wrap{position:relative;display:inline-block;vertical-align:baseline}
-  .ps-blank{background:none;border:0;margin:0;padding:0 6px 3px;cursor:pointer;
-    font-family:var(--serif);font-weight:400;font-size:inherit;line-height:1.2;
-    color:var(--muted);border-bottom:2px solid var(--ink);
-    display:inline-flex;align-items:baseline;gap:8px;
-    -webkit-appearance:none;appearance:none;
-    transition:color .4s ease,border-color .4s ease}
-  .ps-blank:hover{color:var(--ink)}
-  .ps-blank:focus,.ps-blank:focus-visible{outline:none}
-  .ps-blank-text{display:inline-block;min-width:104px}
-  .ps-caret{font-size:.5em;line-height:1;color:var(--muted);
-    transform:translateY(-.18em);transition:transform .3s ease,color .4s ease}
-  .ps-blank[aria-expanded="true"] .ps-caret{transform:translateY(-.18em) rotate(180deg)}
-  .ps-blank.filled{color:var(--brand);border-bottom-color:var(--brand)}
-  .ps-blank.filled .ps-blank-text{min-width:0}
-  .ps-blank.filled .ps-caret{color:var(--brand)}
-
-  /* custom dropdown / popover anchored at the blank */
-  .ps-menu{position:absolute;top:calc(100% + 10px);left:-4px;z-index:60;
-    margin:0;padding:6px;list-style:none;
-    background:var(--bone);border:1px solid var(--line);border-radius:5px;
-    box-shadow:0 20px 48px -22px rgba(33,29,22,.55);
-    min-width:280px;max-width:86vw}
-  .ps-menu[hidden]{display:none}
-  .ps-menu li{font-family:var(--serif);font-weight:400;color:var(--ink);
-    font-size:clamp(17px,3.6vw,20px);line-height:1.28;
-    padding:12px 15px;border-radius:3px;cursor:pointer;white-space:normal;
-    transition:background .2s ease,color .2s ease}
-  .ps-menu li:hover,.ps-menu li.focused{background:rgba(217,117,36,.1);color:var(--brand)}
-  .ps-menu li[aria-selected="true"]{color:var(--brand)}
-
-  .cta-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 0}
-  .cta-btn{display:inline-block;font-family:var(--sans);font-weight:400;font-size:13px;
-    letter-spacing:.2em;text-transform:uppercase;color:var(--ink);border:1px solid var(--ink);
-    padding:13px 28px;text-decoration:none;border-radius:2px;
-    transition:background-color .2s ease,color .2s ease,border-color .2s ease}
-  .cta-btn:hover{background:var(--ink);color:var(--bone)}
-  .cta-btn.amber{background:var(--brand);border-color:var(--brand);color:#fff}
-  .cta-btn.amber:hover{background:var(--ink);border-color:var(--ink);color:var(--brand)}
-  .cta-call-head{color:inherit;text-decoration:none;transition:color .2s ease}
-  .cta-call-head:hover{color:var(--brand)}
   .hero{padding:clamp(40px,8vh,96px) 24px clamp(34px,6vh,72px)}
   .hero-logo{width:clamp(180px,34vw,420px)}
   .hero-tagline{margin-top:clamp(18px,3vh,30px)}
-  .picker-lead{font-size:clamp(26px,3.4vw,32px)}
   @media (min-width:1000px){
     .hero-tagline{max-width:none;white-space:nowrap;letter-spacing:.22em}
-    .ps-picker{max-width:none}
-    .ps-sentence{font-size:25px;line-height:1.5;max-width:none;white-space:nowrap}
-    .ps-blank-text{min-width:360px}
-    .picker-lead{max-width:none;white-space:nowrap}
   }
 </style>
 </head>
@@ -94,18 +42,233 @@
   <p class="hero-tagline">Culinary Partners &#8226; Advisors &#8226; Strategists &#8226; Troubleshooters</p>
 </header>
 
-<section class="picker" id="picker">
-  <div class="picker-wrap">
-    <span class="step-label">Start here</span>
-    <p class="picker-lead">Where are you on your restaurant journey?</p>
+<section class="journey" id="journey">
+  <div class="wrap">
+    <span class="eyebrow">Start here</span>
+    <h2 class="journey-lead">Where are you on your restaurant journey?</h2>
+    <p class="journey-sub">Find the moment that sounds like yours, and we will show you exactly where we would begin.</p>
 
-    <div class="ps-picker" role="group" aria-label="Tell us where you are and what you want to do">
-      <div class="ps-sentence">I am<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="sitBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in where you are"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="sitMenu" role="listbox" aria-label="Where you are" hidden></ul></span></div>
+    <div class="stage-grid">
+      <article class="stage-card">
+        <h3>I'm Just Planning</h3>
+        <p class="stage-quote">"I have an idea, but I don't know where to begin."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Restaurant concept development</li>
+            <li>Business feasibility</li>
+            <li>Budget planning</li>
+            <li>Cuisine selection</li>
+            <li>Brand identity</li>
+            <li>Investment planning</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=planning">Help Me Start</a>
+      </article>
 
-      <div class="ps-sentence" id="goalSentence" hidden>and I want to<span class="ps-blank-wrap"><button type="button" class="ps-blank" id="goalBlank" aria-haspopup="listbox" aria-expanded="false" aria-label="Fill in what you want to do"><span class="ps-blank-text">&nbsp;</span><span class="ps-caret" aria-hidden="true">&#9662;</span></button><ul class="ps-menu" id="goalMenu" role="listbox" aria-label="What you want to do" hidden></ul></span></div>
+      <article class="stage-card">
+        <h3>I'm Looking for a Location</h3>
+        <p class="stage-quote">"I'm searching for the right property."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Location selection</li>
+            <li>Catchment analysis</li>
+            <li>Rental negotiations</li>
+            <li>Space utilization</li>
+            <li>Market potential</li>
+            <li>Seating &amp; revenue planning</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=location-search">Find the Right Space</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>I Have a Location</h3>
+        <p class="stage-quote">"I have the space and need someone to build my restaurant."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Kitchen planning</li>
+            <li>Restaurant design</li>
+            <li>Equipment sourcing</li>
+            <li>BOQ preparation</li>
+            <li>Civil &amp; MEP coordination</li>
+            <li>Branding</li>
+            <li>Project execution</li>
+            <li>Staff recruitment</li>
+            <li>Staff training</li>
+            <li>3 month P&amp;L support</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=have-location">Build My Restaurant</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>We're Ready to Open</h3>
+        <p class="stage-quote">"Construction is almost complete."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>SOP creation</li>
+            <li>Kitchen setup</li>
+            <li>Menu engineering</li>
+            <li>Recipe standardization</li>
+            <li>Staff recruitment</li>
+            <li>Training</li>
+            <li>Trial runs</li>
+            <li>Soft opening</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=ready-to-open">Prepare My Opening</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>My Restaurant Isn't Performing</h3>
+        <p class="stage-quote">"Sales are down and profits are disappearing."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Menu engineering</li>
+            <li>Food cost</li>
+            <li>Kitchen operations</li>
+            <li>Service standards</li>
+            <li>Staff productivity</li>
+            <li>Marketing strategy</li>
+            <li>Customer experience</li>
+            <li>Profitability</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=underperforming">Improve My Business</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>I Want to Revamp My Restaurant</h3>
+        <p class="stage-quote">"The concept feels outdated."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Brand refresh</li>
+            <li>Interior redesign</li>
+            <li>Menu redevelopment</li>
+            <li>Kitchen upgrades</li>
+            <li>Marketing relaunch</li>
+            <li>Customer repositioning</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=revamp">Revamp My Restaurant</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>My Restaurant Has Closed</h3>
+        <p class="stage-quote">"I'm not sure what to do next."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Business turnaround</li>
+            <li>Asset valuation</li>
+            <li>Restaurant sale</li>
+            <li>Lease exit strategy</li>
+            <li>Investor presentation</li>
+            <li>Re-launch planning</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=closed">Let's Discuss Options</a>
+      </article>
+
+      <article class="stage-card">
+        <h3>I Want to Expand</h3>
+        <p class="stage-quote">"My first outlet is successful."</p>
+        <div class="stage-help">
+          <span class="stage-help-label">We help with</span>
+          <ul class="stage-tags">
+            <li>Multi-unit expansion</li>
+            <li>Franchise systems</li>
+            <li>SOP manuals</li>
+            <li>Central kitchen planning</li>
+            <li>Investor decks</li>
+            <li>Expansion strategy</li>
+          </ul>
+        </div>
+        <a class="cta stage-cta" href="contact.html?stage=expand">Scale My Brand</a>
+      </article>
     </div>
+  </div>
+</section>
 
-    <div class="result" id="result" hidden aria-live="polite"></div>
+<section class="trust">
+  <div class="wrap">
+    <span class="eyebrow">You are in good company</span>
+    <h2>Whatever Stage You're In...</h2>
+    <p class="trust-lede">We've probably helped someone in exactly the same situation. From empty plots and unfinished buildings to struggling restaurants and growing brands, we've helped build hospitality businesses across India and internationally. Whether you're investing 30 lakhs or 30 crores, our role is the same: reduce costly mistakes, save time, and build profitable hospitality businesses.</p>
+    <div class="milestone">
+      <div class="mstat">500+</div>
+      <div class="mtext">
+        <span class="eyebrow">Behind the studio</span>
+        <p>Three decades and more than five hundred restaurants, cafes, and kitchens shaped - the depth of experience every new project is built on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <span class="eyebrow">Questions</span>
+    <h2 class="faq-lead">Answers before you ask.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>Do I need to hire Twin Tiger immediately?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>No. Start with a FREE 30-minute strategy call. We'll understand your goals and advise you on the next steps.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>I only have an idea. Is it too early?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>Not at all. In fact, this is the best time to speak with us. Early planning saves significant time, money, and costly mistakes later.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>Can you work with my architect or designer?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>Absolutely. We collaborate with your architects, designers, contractors, and vendors, or we can manage the entire project ourselves.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>Can you help if my restaurant is already running?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>Yes. We specialize in operational audits, menu engineering, food cost optimization, SOP implementation, staff training, and profitability improvement.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>Do you only work in Hyderabad?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>No. We've executed hospitality projects across India and internationally. We also offer online consulting for clients worldwide.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>What types of restaurants do you consult?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a"><p>Fine dining, cafes, cloud kitchens, QSRs, bakeries, bars, clubs, resorts, hotels, food courts, and institutional kitchens.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <h2>Every Great Restaurant Starts With One Conversation.</h2>
+    <p class="fc-copy">Whether you're starting from scratch, solving operational challenges, or planning your next expansion, we'll help you move forward with clarity.</p>
+    <a class="cta amber fc-btn" href="contact.html">Book Your FREE 30-Minute Hospitality Strategy Call</a>
+    <p class="fc-sub">No obligation. Just practical advice from professionals who've built and operated restaurants around the world.</p>
+    <p class="fc-signoff">Let's Build Something Remarkable Together.</p>
   </div>
 </section>
 <footer class="foot">
@@ -120,7 +283,6 @@
     <span class="meta">A design studio for restaurants - Hyderabad, India</span>
   </div>
 </footer>
-<script src="snippets.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
