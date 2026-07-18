@@ -65,7 +65,7 @@
   .ps-blank:focus-visible{outline:2px solid var(--brand);outline-offset:4px}
   .ps-blank .ps-blank-text{font-style:italic}
   .ps-blank.filled{color:var(--brand)}
-  .ps-caret{font-size:.46em;line-height:1;color:var(--brand);transition:transform .3s ease}
+  .ps-caret{font-size:.5em;line-height:1;color:var(--brand);margin-left:auto;transition:transform .3s ease}
   .ps-blank[aria-expanded="true"] .ps-caret{transform:rotate(180deg)}
   .ps-menu{list-style:none;margin:16px 0 0;padding:8px;max-width:540px;
     background:var(--bone);border:1px solid var(--line);border-radius:6px;
@@ -92,14 +92,10 @@
   /* Hero scroll cue */
   .hero-scroll{position:absolute;left:50%;bottom:clamp(16px,3vh,32px);transform:translateX(-50%);
     z-index:6;display:flex;align-items:center;justify-content:center;
-    width:52px;height:52px;border-radius:50%;
-    background:rgba(28,24,18,.30);border:1px solid rgba(244,239,230,.34);
-    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
-    color:#f4efe6;text-decoration:none;cursor:pointer;opacity:.9;
-    transition:opacity .5s ease,background .3s ease,border-color .3s ease}
-  .hero-scroll:hover{background:rgba(28,24,18,.46);border-color:rgba(244,239,230,.58);opacity:1}
-  .hero-scroll svg{width:24px;height:24px;display:block;
-    filter:drop-shadow(0 1px 3px rgba(20,17,12,.45));
+    color:var(--ink);text-decoration:none;cursor:pointer;opacity:.72;
+    transition:opacity .5s ease}
+  .hero-scroll:hover{opacity:1}
+  .hero-scroll svg{width:26px;height:26px;display:block;
     animation:heroScrollBounce 2.4s ease-in-out infinite}
   .hero-scroll.is-hidden{opacity:0;pointer-events:none}
   @keyframes heroScrollBounce{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
