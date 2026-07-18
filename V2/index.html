@@ -77,9 +77,18 @@
   .ps-menu li[aria-selected="true"]{color:var(--brand)}
   .stage-reveal{margin-top:clamp(34px,5vh,58px)}
   .stage-reveal[hidden]{display:none}
-  .stage-reveal .stage-card{max-width:660px;animation:rfade .5s ease}
-  .stage-reveal .stage-card:hover{transform:none;border-color:var(--line);
-    box-shadow:0 12px 32px -26px rgba(33,29,22,.5)}
+  /* Revealed stage rendered as clean bullet points, not a boxed card */
+  .stage-reveal .stage-card{max-width:660px;animation:rfade .5s ease;
+    background:transparent;border:0;border-radius:0;box-shadow:none;padding:0}
+  .stage-reveal .stage-card:hover{transform:none;border-color:transparent;box-shadow:none}
+  .stage-reveal .stage-help{margin-bottom:30px}
+  .stage-reveal .stage-tags{display:block;margin:0;padding:0}
+  .stage-reveal .stage-tags li{font-family:var(--sans);font-size:15px;
+    letter-spacing:.01em;color:var(--ink);border:0;border-radius:0;
+    padding:0 0 0 22px;margin:0 0 11px;line-height:1.5;position:relative}
+  .stage-reveal .stage-tags li:last-child{margin-bottom:0}
+  .stage-reveal .stage-tags li::before{content:"";position:absolute;left:2px;
+    top:.6em;width:5px;height:5px;border-radius:50%;background:var(--brand)}
   /* Hero scroll cue */
   .hero-scroll{position:absolute;left:50%;bottom:clamp(16px,3vh,32px);transform:translateX(-50%);
     z-index:6;display:flex;align-items:center;justify-content:center;
