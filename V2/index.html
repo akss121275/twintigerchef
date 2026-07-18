@@ -15,6 +15,43 @@
   @media (min-width:1000px){
     .hero-tagline{max-width:none;white-space:nowrap;letter-spacing:.22em}
   }
+
+  /* Hero background video */
+  .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--dark)}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:var(--dark)}
+  .hero-scrim{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(20,17,12,.40),rgba(20,17,12,.58))}
+  .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
+  .hero .hero-tagline{color:var(--dark-text)}
+  @media (prefers-reduced-motion:reduce){.hero-video{display:none}}
+
+  /* Home stage picker - fill-in-the-blank, single reveal */
+  .stage-picker{margin:clamp(30px,5vh,54px) 0 0}
+  .sp-sentence{font-family:var(--serif);font-weight:400;color:var(--ink);
+    font-size:clamp(27px,4.2vw,46px);line-height:1.25;display:flex;flex-wrap:wrap;
+    align-items:baseline;gap:.26em;margin:0}
+  .ps-blank{position:relative;display:inline-flex;align-items:baseline;gap:.34em;cursor:pointer;
+    border-bottom:2px solid var(--brand);min-width:5.5em;padding:0 .1em .04em;color:var(--accent);
+    transition:color .3s ease,border-color .3s ease}
+  .ps-blank:hover{color:var(--brand)}
+  .ps-blank:focus-visible{outline:2px solid var(--brand);outline-offset:4px}
+  .ps-blank .ps-blank-text{font-style:italic}
+  .ps-blank.filled{color:var(--brand)}
+  .ps-caret{font-size:.46em;line-height:1;color:var(--brand);transition:transform .3s ease}
+  .ps-blank[aria-expanded="true"] .ps-caret{transform:rotate(180deg)}
+  .ps-menu{list-style:none;margin:16px 0 0;padding:8px;max-width:540px;
+    background:var(--bone);border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 26px 62px -30px rgba(33,29,22,.6)}
+  .ps-menu[hidden]{display:none}
+  .ps-menu li{font-family:var(--sans);font-size:15px;letter-spacing:.02em;color:var(--ink);
+    padding:12px 16px;border-radius:4px;cursor:pointer;transition:background .2s ease,color .2s ease}
+  .ps-menu li.focused,.ps-menu li:hover{background:var(--sand);color:var(--brand)}
+  .ps-menu li[aria-selected="true"]{color:var(--brand)}
+  .stage-reveal{margin-top:clamp(34px,5vh,58px)}
+  .stage-reveal[hidden]{display:none}
+  .stage-reveal .stage-card{max-width:660px;animation:rfade .5s ease}
+  .stage-reveal .stage-card:hover{transform:none;border-color:var(--line);
+    box-shadow:0 12px 32px -26px rgba(33,29,22,.5)}
 </style>
 </head>
 <body>
@@ -38,8 +75,14 @@
   </div>
 </nav>
 <header class="hero" id="top">
-  <img class="hero-logo" src="assets/logo.png" alt="Twin Tiger Chefs">
-  <p class="hero-tagline">Culinary Partners &#8226; Advisors &#8226; Strategists &#8226; Troubleshooters</p>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <img class="hero-logo" src="assets/logo.png" alt="Twin Tiger Chefs">
+    <p class="hero-tagline">Culinary Partners &#8226; Advisors &#8226; Strategists &#8226; Troubleshooters</p>
+  </div>
 </header>
 
 <section class="journey" id="journey">
@@ -48,12 +91,25 @@
     <h2 class="journey-lead">Where are you on your restaurant journey?</h2>
     <p class="journey-sub">Find the moment that sounds like yours, and we will show you exactly where we would begin.</p>
 
-    <div class="stage-grid">
-      <article class="stage-card">
+    <div class="stage-picker" id="stagePicker">
+      <p class="sp-sentence">
+        <span>I am</span>
+        <span class="ps-blank" id="stageBlank" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose your stage">
+          <span class="ps-blank-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="ps-caret" aria-hidden="true">&#9662;</span>
+        </span>
+      </p>
+      <ul class="ps-menu" id="stageMenu" role="listbox" aria-label="Restaurant journey stages" hidden></ul>
+    </div>
+
+    <div class="stage-reveal" id="stageReveal" hidden></div>
+
+    <div class="stage-source" id="stageSource" hidden aria-hidden="true">
+      <article class="stage-card" data-pick="just planning">
         <h3>I'm Just Planning</h3>
         <p class="stage-quote">"I have an idea, but I don't know where to begin."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We can help with</span>
           <ul class="stage-tags">
             <li>Restaurant concept development</li>
             <li>Business feasibility</li>
@@ -66,11 +122,11 @@
         <a class="cta stage-cta" href="contact.html?stage=planning">Help Me Start</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="looking for a location">
         <h3>I'm Looking for a Location</h3>
         <p class="stage-quote">"I'm searching for the right property."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We help you evaluate</span>
           <ul class="stage-tags">
             <li>Location selection</li>
             <li>Catchment analysis</li>
@@ -83,11 +139,11 @@
         <a class="cta stage-cta" href="contact.html?stage=location-search">Find the Right Space</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="ready to build my restaurant">
         <h3>I Have a Location</h3>
         <p class="stage-quote">"I have the space and need someone to build my restaurant."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We provide complete turnkey execution</span>
           <ul class="stage-tags">
             <li>Kitchen planning</li>
             <li>Restaurant design</li>
@@ -104,11 +160,11 @@
         <a class="cta stage-cta" href="contact.html?stage=have-location">Build My Restaurant</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="getting ready to open">
         <h3>We're Ready to Open</h3>
         <p class="stage-quote">"Construction is almost complete."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We'll prepare your team for launch</span>
           <ul class="stage-tags">
             <li>SOP creation</li>
             <li>Kitchen setup</li>
@@ -123,11 +179,11 @@
         <a class="cta stage-cta" href="contact.html?stage=ready-to-open">Prepare My Opening</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="running a restaurant that's struggling">
         <h3>My Restaurant Isn't Performing</h3>
         <p class="stage-quote">"Sales are down and profits are disappearing."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We'll diagnose and improve</span>
           <ul class="stage-tags">
             <li>Menu engineering</li>
             <li>Food cost</li>
@@ -142,11 +198,11 @@
         <a class="cta stage-cta" href="contact.html?stage=underperforming">Improve My Business</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="ready to revamp my restaurant">
         <h3>I Want to Revamp My Restaurant</h3>
         <p class="stage-quote">"The concept feels outdated."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We help transform</span>
           <ul class="stage-tags">
             <li>Brand refresh</li>
             <li>Interior redesign</li>
@@ -159,7 +215,7 @@
         <a class="cta stage-cta" href="contact.html?stage=revamp">Revamp My Restaurant</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="restarting after a closure">
         <h3>My Restaurant Has Closed</h3>
         <p class="stage-quote">"I'm not sure what to do next."</p>
         <div class="stage-help">
@@ -176,11 +232,11 @@
         <a class="cta stage-cta" href="contact.html?stage=closed">Let's Discuss Options</a>
       </article>
 
-      <article class="stage-card">
+      <article class="stage-card" data-pick="ready to expand">
         <h3>I Want to Expand</h3>
         <p class="stage-quote">"My first outlet is successful."</p>
         <div class="stage-help">
-          <span class="stage-help-label">We help with</span>
+          <span class="stage-help-label">We help you grow through</span>
           <ul class="stage-tags">
             <li>Multi-unit expansion</li>
             <li>Franchise systems</li>
@@ -284,5 +340,89 @@
   </div>
 </footer>
 <script src="site.js"></script>
+<script>
+/* Home stage picker: fill-in-the-blank "I am ___" selector, single-stage reveal. */
+(function(){
+  var picker=document.getElementById('stagePicker');
+  var source=document.getElementById('stageSource');
+  var reveal=document.getElementById('stageReveal');
+  if(!picker||!source||!reveal) return;
+  var blank=document.getElementById('stageBlank');
+  var menu=document.getElementById('stageMenu');
+  var blankText=blank.querySelector('.ps-blank-text');
+  var cards=[].slice.call(source.querySelectorAll('.stage-card'));
+
+  cards.forEach(function(card,idx){
+    var li=document.createElement('li');
+    li.setAttribute('role','option');
+    li.setAttribute('aria-selected','false');
+    li.setAttribute('data-idx',String(idx));
+    li.textContent=card.getAttribute('data-pick')||'';
+    menu.appendChild(li);
+  });
+
+  function opts(){return [].slice.call(menu.querySelectorAll('li[role="option"]'));}
+  function clearFocused(){opts().forEach(function(o){o.classList.remove('focused');});}
+  function setFocused(li){clearFocused();if(li){li.classList.add('focused');li.scrollIntoView({block:'nearest'});}}
+  function open(){
+    if(!menu.hidden) return;
+    menu.hidden=false;
+    blank.setAttribute('aria-expanded','true');
+    setFocused(menu.querySelector('li[aria-selected="true"]')||opts()[0]);
+  }
+  function close(){
+    if(menu.hidden) return;
+    menu.hidden=true;
+    blank.setAttribute('aria-expanded','false');
+    clearFocused();
+  }
+  function choose(li){
+    if(!li) return;
+    var idx=parseInt(li.getAttribute('data-idx'),10);
+    blankText.textContent=li.textContent;
+    blank.classList.add('filled');
+    opts().forEach(function(o){o.setAttribute('aria-selected',o===li?'true':'false');});
+    close();
+    reveal.innerHTML='';
+    reveal.appendChild(cards[idx].cloneNode(true));
+    reveal.hidden=false;
+    reveal.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  blank.addEventListener('click',function(e){
+    e.stopPropagation();
+    if(menu.hidden){open();}else{close();}
+  });
+  menu.addEventListener('click',function(e){
+    var li=e.target.closest('li[role="option"]');
+    if(!li) return;
+    e.stopPropagation();
+    choose(li);
+    blank.focus();
+  });
+  menu.addEventListener('mousemove',function(e){
+    var li=e.target.closest('li[role="option"]');
+    if(li){setFocused(li);}
+  });
+  document.addEventListener('click',function(e){
+    if(!menu.hidden && !blank.contains(e.target) && !menu.contains(e.target)){close();}
+  });
+  blank.addEventListener('keydown',function(e){
+    var list=opts();
+    if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      if(menu.hidden){open();}
+      else{
+        var cur=menu.querySelector('li.focused');
+        if(e.key==='ArrowDown'){var ni=cur?list.indexOf(cur)+1:0;if(ni>=list.length){ni=0;}setFocused(list[ni]);}
+        else if(cur){choose(cur);}
+      }
+    }else if(e.key==='ArrowUp'){
+      e.preventDefault();
+      if(menu.hidden){open();}
+      else{var cur=menu.querySelector('li.focused');var pi=cur?list.indexOf(cur)-1:list.length-1;if(pi<0){pi=list.length-1;}setFocused(list[pi]);}
+    }else if(e.key==='Escape'){close();blank.focus();}
+  });
+})();
+</script>
 </body>
 </html>
