@@ -9,21 +9,49 @@
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-  .hero{padding:clamp(40px,8vh,96px) 24px clamp(34px,6vh,72px)}
-  .hero-logo{width:clamp(180px,34vw,420px)}
-  .hero-tagline{margin-top:clamp(18px,3vh,30px)}
-  @media (min-width:1000px){
-    .hero-tagline{max-width:none;white-space:nowrap;letter-spacing:.22em}
-  }
+  /* Hero slideshow (native cross-fade, matches the promo reel) */
+  .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--bone);
+    min-height:clamp(460px,82vh,760px);padding:0}
+  .hs-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+  .hs-slide.is-active{opacity:1}
+  @media (prefers-reduced-motion:reduce){.hs-slide{transition:opacity .01s linear}}
 
-  /* Hero background video */
-  .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--dark)}
-  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:var(--dark)}
-  .hero-scrim{position:absolute;inset:0;z-index:1;
-    background:linear-gradient(180deg,rgba(20,17,12,.40),rgba(20,17,12,.58))}
-  .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
-  .hero .hero-tagline{color:var(--dark-text)}
-  @media (prefers-reduced-motion:reduce){.hero-video{display:none}}
+  .hs-copy{max-width:min(90vw,900px);padding:24px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:clamp(16px,2.4vh,24px)}
+  .hs-headline{font-family:var(--serif);font-weight:400;color:var(--ink);margin:0;
+    font-size:clamp(34px,6vw,68px);line-height:1.12;letter-spacing:.01em}
+  .hs-rule{display:block;width:54px;height:2px;background:var(--brand);opacity:.9}
+  .hs-eyebrow{font-family:var(--sans);font-weight:400;font-size:clamp(11px,1.4vw,13px);
+    letter-spacing:.34em;text-transform:uppercase;color:var(--brand)}
+
+  /* Kitchen architecture plan slides */
+  .hs-plan-inner{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2.2vh,22px);
+    padding:clamp(26px,5vh,54px) 24px;width:100%}
+  .hs-plan-frame{background:#fff;border:1px solid var(--line);padding:clamp(10px,1.6vw,18px);
+    box-shadow:0 18px 44px rgba(33,29,22,.10);max-width:min(88vw,520px)}
+  .hs-plan-frame img{display:block;width:100%;height:clamp(210px,38vh,360px);object-fit:contain}
+  .hs-caption{font-family:var(--serif);font-weight:400;color:var(--ink);margin:0;
+    font-size:clamp(24px,3.4vw,40px);line-height:1.15}
+
+  /* Food photo slides */
+  .hs-photo{align-items:flex-end;background:var(--dark)}
+  .hs-photo-img{position:absolute;inset:0;background-size:cover;background-position:center;
+    transform:scale(1.07);transition:transform 7s ease}
+  .hs-photo.is-active .hs-photo-img{transform:scale(1)}
+  @media (prefers-reduced-motion:reduce){.hs-photo-img{transition:none;transform:none}}
+  .hs-photo-scrim{position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(20,17,12,.12) 0%,rgba(20,17,12,0) 34%,rgba(20,17,12,.64) 100%)}
+  .hs-photo-caption{position:relative;z-index:2;margin:0 0 clamp(40px,7vh,72px);
+    font-family:var(--serif);font-weight:400;color:var(--dark-text);
+    font-size:clamp(30px,4.6vw,58px);line-height:1.1;text-align:center;
+    text-shadow:0 2px 22px rgba(20,17,12,.5)}
+
+  /* Logo / sign-off slide */
+  .hs-logo-img{width:clamp(150px,26vw,300px);height:auto;display:block}
+  .hs-logo-line{font-size:clamp(28px,4.4vw,52px)}
+  .hs-domain{font-family:var(--sans);font-weight:400;font-size:clamp(12px,1.6vw,15px);
+    letter-spacing:.26em;color:var(--brand);text-decoration:none}
 
   /* Home stage picker - fill-in-the-blank, single reveal */
   .stage-picker{margin:clamp(30px,5vh,54px) 0 0}
@@ -75,15 +103,90 @@
   </div>
 </nav>
 <header class="hero" id="top">
-  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg">
-    <source src="assets/hero.mp4" type="video/mp4">
-  </video>
-  <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="hero-inner">
-    <img class="hero-logo" src="assets/logo.png" alt="Twin Tiger Chefs">
-    <p class="hero-tagline">Culinary Partners &#8226; Advisors &#8226; Strategists &#8226; Troubleshooters</p>
+  <div class="hero-slides" id="heroSlides" role="group" aria-roledescription="slideshow" aria-label="Twin Tiger Chefs">
+
+    <div class="hs-slide is-active">
+      <div class="hs-copy">
+        <p class="hs-headline">Anyone can plate a dish.</p>
+        <span class="hs-rule" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="hs-slide">
+      <div class="hs-copy">
+        <p class="hs-headline">We design the room that makes it possible.</p>
+        <span class="hs-rule" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="hs-slide hs-plan">
+      <div class="hs-plan-inner">
+        <span class="hs-eyebrow">Kitchen Architecture</span>
+        <div class="hs-plan-frame"><img src="../assets/layouts/layout-01.jpg" alt="Kitchen layout drawing" loading="lazy"></div>
+        <p class="hs-caption">Every line drawn to scale.</p>
+      </div>
+    </div>
+
+    <div class="hs-slide hs-plan">
+      <div class="hs-plan-inner">
+        <span class="hs-eyebrow">Kitchen Architecture</span>
+        <div class="hs-plan-frame"><img src="../assets/layouts/layout-02.jpg" alt="Kitchen layout showing stations and flow" loading="lazy"></div>
+        <p class="hs-caption">Flow, stations, back-of-house.</p>
+      </div>
+    </div>
+
+    <div class="hs-slide hs-plan">
+      <div class="hs-plan-inner">
+        <span class="hs-eyebrow">Kitchen Architecture</span>
+        <div class="hs-plan-frame"><img src="../assets/layouts/layout-03.jpg" alt="Detailed kitchen floor plan" loading="lazy"></div>
+        <p class="hs-caption">The plan behind the plate.</p>
+      </div>
+    </div>
+
+    <div class="hs-slide hs-photo" aria-label="Plated dish">
+      <div class="hs-photo-img" style="background-image:url('../assets/gallery/g10.jpg')"></div>
+      <div class="hs-photo-scrim" aria-hidden="true"></div>
+      <p class="hs-photo-caption">The result</p>
+    </div>
+
+    <div class="hs-slide hs-photo" aria-label="Plated dish">
+      <div class="hs-photo-img" style="background-image:url('../assets/gallery/g11.jpg')"></div>
+      <div class="hs-photo-scrim" aria-hidden="true"></div>
+    </div>
+
+    <div class="hs-slide hs-photo" aria-label="Plated dish">
+      <div class="hs-photo-img" style="background-image:url('../assets/gallery/g19.jpg')"></div>
+      <div class="hs-photo-scrim" aria-hidden="true"></div>
+      <p class="hs-photo-caption">Built to perform.</p>
+    </div>
+
+    <div class="hs-slide hs-logo">
+      <div class="hs-copy">
+        <img class="hs-logo-img" src="assets/logo.png" alt="Twin Tiger Chefs">
+        <p class="hs-headline hs-logo-line">We design the kitchens.</p>
+        <span class="hs-rule" aria-hidden="true"></span>
+        <a class="hs-domain" href="#top">twintigerchef.food</a>
+      </div>
+    </div>
+
   </div>
 </header>
+<script>
+(function(){
+  var root=document.getElementById('heroSlides');
+  if(!root)return;
+  var slides=Array.prototype.slice.call(root.querySelectorAll('.hs-slide'));
+  if(slides.length<2)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i=0;
+  if(reduce){slides[i].classList.remove('is-active');slides[slides.length-1].classList.add('is-active');return;}
+  setInterval(function(){
+    slides[i].classList.remove('is-active');
+    i=(i+1)%slides.length;
+    slides[i].classList.add('is-active');
+  },3600);
+})();
+</script>
 
 <section class="journey" id="journey">
   <div class="wrap">
@@ -426,3 +529,4 @@
 </script>
 </body>
 </html>
+
