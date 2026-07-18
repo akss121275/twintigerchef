@@ -27,8 +27,9 @@
   .social-ic svg{display:block}
   .form-intro{font-family:var(--serif);font-weight:400;color:rgba(233,225,211,.92);
     font-size:clamp(19px,2.2vw,24px);line-height:1.4;max-width:34ch;margin:0 0 10px}
-  .form-sub{font-family:var(--sans);font-weight:300;color:rgba(233,225,211,.72);
-    font-size:15px;line-height:1.5;letter-spacing:.02em;max-width:46ch;margin:0 0 34px}
+  .form-sub{font-family:var(--sans);font-weight:400;color:rgba(233,225,211,.9);
+    font-size:clamp(17px,2vw,21px);line-height:1.5;letter-spacing:.02em;max-width:46ch;margin:0 0 34px}
+  .form-sub .hl{color:var(--brand);font-weight:600;letter-spacing:.01em}
   .wa-send{display:none;align-items:center;justify-content:center;gap:9px;
     font-family:var(--sans);font-weight:400;font-size:13px;letter-spacing:.2em;
     text-transform:uppercase;color:#fff;background:var(--brand);border:1px solid var(--brand);
@@ -63,7 +64,7 @@
 <section class="contact">
   <div class="wrap">
     <p class="form-intro">Every great restaurant starts with one conversation. Start yours.</p>
-    <p class="form-sub">Send us a message and book your free 30 minute strategy session.</p>
+    <p class="form-sub">Send us a message and book your <span class="hl">free 30 minute strategy session</span>.</p>
     <form class="form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="2ed659d3-a5d4-429e-8fe5-64a777c4c9af">
       <input type="hidden" name="subject" value="New enquiry from Twin Tiger Chefs website">
@@ -135,9 +136,11 @@
     if(about)lines.push('About: '+about);
     var url='https://wa.me/919160500505?text='+encodeURIComponent(lines.join('\n'));
     window.open(url,'_blank');
+    form.reset();
   });
 })();
 </script>
 </body>
 </html>
+
 
