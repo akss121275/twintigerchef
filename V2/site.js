@@ -10,6 +10,26 @@
     });
   }
 
+  /* ---- FAQ accordion (home) ---- */
+  [].slice.call(document.querySelectorAll('.faq-q')).forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.closest('.faq-item');
+      if(!item) return;
+      var open=item.classList.toggle('open');
+      q.setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+
+  /* ---- contact form: prefill journey stage from ?stage= ---- */
+  (function(){
+    var stage=new URLSearchParams(window.location.search).get('stage');
+    if(!stage) return;
+    var sel=document.querySelector('form.form select[name="client_type"]');
+    if(!sel) return;
+    var opt=sel.querySelector('option[data-stage="'+stage.replace(/[^a-z0-9-]/gi,'')+'"]');
+    if(opt){opt.selected=true;}
+  })();
+
   /* ---- plating slideshow (profile) ---- */
   (function(){
     var slides=[].slice.call(document.querySelectorAll('.plating .pslide'));
