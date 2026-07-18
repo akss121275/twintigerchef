@@ -69,14 +69,14 @@
       <input type="hidden" name="subject" value="New enquiry from Twin Tiger Chefs website">
       <select class="full" name="client_type">
         <option value="" disabled selected>Where are you on your restaurant journey?</option>
-        <option value="I'm Just Planning" data-stage="planning">I'm Just Planning</option>
-        <option value="I'm Looking for a Location" data-stage="location-search">I'm Looking for a Location</option>
-        <option value="I Have a Location" data-stage="have-location">I Have a Location</option>
-        <option value="We're Ready to Open" data-stage="ready-to-open">We're Ready to Open</option>
-        <option value="My Restaurant Isn't Performing" data-stage="underperforming">My Restaurant Isn't Performing</option>
-        <option value="I Want to Revamp My Restaurant" data-stage="revamp">I Want to Revamp My Restaurant</option>
-        <option value="My Restaurant Has Closed" data-stage="closed">My Restaurant Has Closed</option>
-        <option value="I Want to Expand" data-stage="expand">I Want to Expand</option>
+        <option value="✓ I'm Just Planning" data-stage="planning">I'm Just Planning</option>
+        <option value="✓ I'm Looking for a Location" data-stage="location-search">I'm Looking for a Location</option>
+        <option value="✓ I Have a Location" data-stage="have-location">I Have a Location</option>
+        <option value="✓ We're Ready to Open" data-stage="ready-to-open">We're Ready to Open</option>
+        <option value="✓ My Restaurant Isn't Performing" data-stage="underperforming">My Restaurant Isn't Performing</option>
+        <option value="✓ I Want to Revamp My Restaurant" data-stage="revamp">I Want to Revamp My Restaurant</option>
+        <option value="✓ My Restaurant Has Closed" data-stage="closed">My Restaurant Has Closed</option>
+        <option value="✓ I Want to Expand" data-stage="expand">I Want to Expand</option>
       </select>
       <input type="text" name="name" placeholder="Name" required>
       <input type="email" name="email" placeholder="Email" required>
@@ -122,18 +122,17 @@
   if(!btn||!form)return;
   btn.addEventListener('click',function(){
     var d=new FormData(form);
-    var rows=[
-      ['Name',d.get('name')],
-      ['Phone',d.get('phone')],
-      ['Where I am',d.get('client_type')],
-      ['Restaurant or project',d.get('project')],
-      ['About',d.get('message')]
-    ];
     var lines=[];
-    for(var i=0;i<rows.length;i++){
-      var v=(rows[i][1]||'').toString().trim();
-      if(v)lines.push(rows[i][0]+': '+v);
-    }
+    var stage=(d.get('client_type')||'').toString().trim();
+    if(stage)lines.push(stage);
+    var name=(d.get('name')||'').toString().trim();
+    if(name)lines.push('Name: *'+name+'*');
+    var phone=(d.get('phone')||'').toString().trim();
+    if(phone)lines.push('Phone: *'+phone+'*');
+    var project=(d.get('project')||'').toString().trim();
+    if(project)lines.push('Restaurant or project: '+project);
+    var about=(d.get('message')||'').toString().trim();
+    if(about)lines.push('About: '+about);
     var url='https://wa.me/919160500505?text='+encodeURIComponent(lines.join('\n'));
     window.open(url,'_blank');
   });
