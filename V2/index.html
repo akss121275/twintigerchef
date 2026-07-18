@@ -80,6 +80,21 @@
   .stage-reveal .stage-card{max-width:660px;animation:rfade .5s ease}
   .stage-reveal .stage-card:hover{transform:none;border-color:var(--line);
     box-shadow:0 12px 32px -26px rgba(33,29,22,.5)}
+  /* Hero scroll cue */
+  .hero-scroll{position:absolute;left:50%;bottom:clamp(16px,3vh,32px);transform:translateX(-50%);
+    z-index:6;display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(28,24,18,.30);border:1px solid rgba(244,239,230,.34);
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+    color:#f4efe6;text-decoration:none;cursor:pointer;opacity:.9;
+    transition:opacity .5s ease,background .3s ease,border-color .3s ease}
+  .hero-scroll:hover{background:rgba(28,24,18,.46);border-color:rgba(244,239,230,.58);opacity:1}
+  .hero-scroll svg{width:20px;height:20px;display:block;
+    filter:drop-shadow(0 1px 3px rgba(20,17,12,.45));
+    animation:heroScrollBounce 2.4s ease-in-out infinite}
+  .hero-scroll.is-hidden{opacity:0;pointer-events:none}
+  @keyframes heroScrollBounce{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
+  @media (prefers-reduced-motion:reduce){.hero-scroll svg{animation:none;transform:none}}
 </style>
 </head>
 <body>
@@ -170,6 +185,9 @@
     </div>
 
   </div>
+  <a class="hero-scroll" href="#journey" aria-label="Scroll down to explore">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
 </header>
 <script>
 (function(){
@@ -185,6 +203,22 @@
     i=(i+1)%slides.length;
     slides[i].classList.add('is-active');
   },3600);
+})();
+</script>
+<script>
+(function(){
+  var cue=document.querySelector('.hero-scroll');
+  var hero=document.getElementById('top');
+  if(!cue||!hero)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cue.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.getElementById('journey')||hero.nextElementSibling;
+    if(target)target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  });
+  window.addEventListener('scroll',function(){
+    cue.classList.toggle('is-hidden',window.scrollY>hero.offsetHeight*0.6);
+  },{passive:true});
 })();
 </script>
 
@@ -529,4 +563,5 @@
 </script>
 </body>
 </html>
+
 
