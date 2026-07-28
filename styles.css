@@ -428,3 +428,25 @@ html.reveal-all .reveal,.no-js .reveal{opacity:1!important;transform:none!import
 @keyframes bm-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:640px){#brand-marquee{padding:26px 0 30px}#brand-marquee .bm-logo{padding:0 26px;height:46px}#brand-marquee .bm-logo img{height:42px;max-width:240px}#brand-marquee .bm-eyebrow{margin-bottom:18px}}
 @media(prefers-reduced-motion:reduce){#brand-marquee .bm-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:22px 8px}#brand-marquee .bm-dup{display:none}}
+
+
+/* ===== Mobile nav toggle ===== */
+.navtoggle{background:none;border:0;cursor:pointer;padding:8px;width:44px;height:44px;align-items:center;justify-content:center;color:#fff}
+header.nav.solid .navtoggle{color:var(--ink)}
+.navtoggle svg{display:block}
+@media(max-width:860px){
+  .navtoggle{display:flex}
+  .navlinks{display:flex;flex-direction:column;gap:0;position:absolute;top:100%;left:0;right:0;
+    background:rgba(247,244,239,.98);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(18,15,11,.14);
+    padding:6px 0;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+    transition:max-height .3s ease,opacity .25s ease}
+  .navlinks.open{max-height:82vh;opacity:1;pointer-events:auto;overflow:auto}
+  header.nav .navlinks a{color:var(--ink);opacity:.9;padding:13px 24px}
+  .navdrop{display:block;position:static;align-items:stretch}
+  .navdrop::after{display:none}
+  .navdrop-top{padding:13px 24px}
+  .navdrop-menu{position:static;transform:none;margin:0;display:flex;background:transparent;
+    border:0;box-shadow:none;padding:0;min-width:0;backdrop-filter:none}
+  .navdrop-menu a{padding:11px 24px 11px 42px;opacity:.78}
+}
