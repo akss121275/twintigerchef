@@ -29,7 +29,7 @@
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
   <a href="#top" class="brand" aria-label="Twin Tiger Chefs"><img src="assets/logo.png" alt="Twin Tiger Chefs" class="brand-logo"></a>
-  <nav class="navlinks">
+  <nav class="navlinks" id="navlinks">
     <a href="#studio">The Studio</a>
     <div class="navdrop">
       <a href="#tina" class="navdrop-top">Chefs</a>
@@ -44,6 +44,9 @@
     <a href="https://open.substack.com/pub/aksolankky" target="_blank" rel="noopener">Newsletter</a>
     <a href="#contact">Contact</a>
   </nav>
+  <button class="navtoggle" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
 </header>
 
 <!-- ===== HERO (carousel) ===== -->
@@ -739,6 +742,9 @@ if(!document.documentElement.classList.contains('reveal-all')){
     });
   });
 })();
+</script>
+<script>
+(function(){var t=document.querySelector('.navtoggle'),n=document.querySelector('.navlinks');if(!t||!n)return;t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open');t.setAttribute('aria-expanded','false');});});})();
 </script>
 </body>
 </html>
